@@ -5,6 +5,8 @@ import numpy as np
 from pyarrow import feather
 from torch.utils.data import Dataset
 # import torch.nn.functional as F
+from Solvation_1.Vectorizers.vectorizers import *
+from Solvation_1.config import *
 
 # def create_df(data_file = r'/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSol-v2009_energies_v2.tsv',
 #               solvent_props_file = r'/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSolDatabase_v2012/Solvent_properties.tsv'):
@@ -31,7 +33,8 @@ from torch.utils.data import Dataset
 #     df3 = df3[df3.SoluteName != 'water dimer']
 #     return df3
 
-df3 = feather.read_feather('../Solvation_1/Tables/df3_f')
+# df3 = feather.read_feather('../Solvation_1/Tables/df3_f')
+# df3
 def create_SS_table(df3):
     Solvents = dict(df3['Solvent'].value_counts().items())
     Solutes = dict(df3['SoluteName'].value_counts().items())
@@ -53,31 +56,44 @@ def create_SS_table(df3):
 
 
 class SS_Dataset(Dataset):
-    def __init__(self, table, solvent_props, solute_props, args=None, transform=None):
-        self.table = table
-        self.solvent_props = solvent_props
-        self.solute_props = solute_props
+
+    def __init__(self, SS_table, solvent_vect, solute_vect, transform=None):
+
+        self.vectorizers_map = {
+            'solvent_macro_props1': {'func': solvent_macro_props1, 'formats': ['tsv'], 'paths': ['Solvation_1/Tables/Solvent_properties1.tsv']},
+            'solute_TESA': {'func': solute_TESA, 'formats': ['feather'], 'paths': ['Solvation_1/Tables/df3_f']},
+            'test_sp': {'func': test_sp, 'formats': [], 'paths': []},
+            'test_up': {'func': test_up, 'formats': [], 'paths': []},
+        }
+
+        self.table = SS_table
+        self.solvent_vect = solvent_vect
+        self.solute_vect = solute_vect
         self.data = []
         self.transform = transform
         self.table = self.table.set_index('Unnamed: 0')
-        if args is not None:
-            self.args = True
-            self.sp, self.up = args
+        # if args is not None:
+        #     self.args = True
+        #     self.sp, self.up = args
         for solvent in self.table.columns.tolist():
             for solute in self.table.index.tolist():
                 G_solv = self.table[solvent][solute]
                 if not pd.isna(G_solv):
                     self.data.append((solvent, solute, G_solv))
+        self.solvent_args = []
+        self.solute_args = []
+        for format, path in zip(self.vectorizers_map[self.solvent_vect]['formats'], self.vectorizers_map[self.solvent_vect]['paths']):
+            self.solvent_args.append(read_format(format)(project_path(path)))
+        for format, path in zip(self.vectorizers_map[self.solute_vect]['formats'], self.vectorizers_map[self.solute_vect]['paths']):
+            self.solute_args.append(read_format(format)(project_path(path)))
+        # print(f'sa: {self.solvent_args}, ua: {self.solute_args}')
+        self.solvent_func = self.vectorizers_map[self.solvent_vect]['func']
+        self.solute_func = self.vectorizers_map[self.solute_vect]['func']
 
     def __getitem__(self, i):
         solvent, solute, G_solv = self.data[i]
-        if self.args:
-            X1 = self.solvent_props(solvent, self.sp)
-            X2 = self.solute_props(solute, self.up)
-        else:
-            X1 = self.solvent_props(solvent)
-            X2 = self.solute_props(solute)
-
+        X1 = self.solvent_func(solvent, self.solvent_args)
+        X2 = self.solute_func(solute, self.solute_args)
         # check dim
         # print(f'X1 - {X1.shape}')
         # print(f'X2 - {X2.shape}')

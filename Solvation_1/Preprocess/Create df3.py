@@ -6,8 +6,9 @@ from torch.utils.data import Dataset
 # import torch.nn.functional as F
 from pyarrow import feather
 
-def create_df(data_file = r'/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSol-v2009_energies_v2.tsv',
-              solvent_props_file = r'/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSolDatabase_v2012/Solvent_properties.tsv'):
+
+def create_df(data_file=r'/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSol-v2009_energies_v2.tsv',
+              solvent_props_file=r'/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSolDatabase_v2012/Solvent_properties.tsv'):
     # Reading data from file
     with open(data_file) as f:
         t = 0

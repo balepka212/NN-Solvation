@@ -1,5 +1,8 @@
+import torch.nn as nn
+
+
 class LinearNet3(nn.Module):
-    def __init__(self, in_features = 10):
+    def __init__(self, in_features=10):
         super(LinearNet3, self).__init__()
         self.in_features = in_features
         self.flatten = nn.Flatten()
@@ -12,7 +15,6 @@ class LinearNet3(nn.Module):
             nn.ReLU(),
             nn.Linear(10, 1)
         )
-
 
     def forward(self, x):
         x = self.flatten(x)
