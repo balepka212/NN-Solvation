@@ -294,27 +294,4 @@ class ResNet1D(nn.Module):
             print('softmax', out.shape)
 
         return out
-#%%
-def solute_3_classes(solute, df):
-    row = df.loc[df['SoluteName'] == solute].iloc[0]
-    out = torch.tensor((row.Level1, row.Level2, row.Level3))
-    return out
 
-
-# solute_3_classes('hydrogen', df3)
-def solute_TESA(solute, df):
-    row = df[df['SoluteName'] == solute][:1]
-    out = row[row.columns[17:26]]
-    out = torch.tensor(out.values, dtype=torch.float)
-    # print(f'type TESA: {out.dtype}')
-    return out
-
-
-# solute_TESA('hydrogen', df3)
-
-def solvent_macro_props1(solvent, path_to_table):
-    table = pd.read_table(path_to_table)
-    row = table[table['Name'] == solvent]
-    out = row[row.columns[2:]]
-    out = torch.tensor(out.values, dtype=torch.float)
-    return out

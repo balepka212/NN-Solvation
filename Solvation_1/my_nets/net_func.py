@@ -1,6 +1,11 @@
+import pandas as pd
 import torch
 import torch.nn as nn
 from tqdm import tqdm
+from rdkit import Chem
+from Solvation_1.Vectorizers.vectorizers import get_smiles
+from Solvation_1.my_nets.Create_dataset import SS_Dataset
+from torch.utils.data import DataLoader
 
 
 def validate(model, val_loader):
@@ -23,7 +28,7 @@ def train(model, train_loader, val_loader, loss_function, optimizer, epochs=10, 
     """TODO write all descriptions"""
     for epoch in range(epochs):
         hist_loss = 0
-        for vector, G_true in tqdm(train_loader):  # get bacth
+        for vector, G_true in tqdm(train_loader):  # get batch
             vector, G_true = vector.to(device), G_true.to(device)
             model.to(device)
             outputs = model(vector)  # call forward inside
@@ -37,30 +42,29 @@ def train(model, train_loader, val_loader, loss_function, optimizer, epochs=10, 
 
             hist_loss += loss.item()  # For stat only
 
-        # writer.add_scalar("Train/Loss", hist_loss / ( len(trainloader) ), epoch)
-        # train_loss_data[tag].append(hist_loss/(len(trainloader)))
-        # writer.close()
-        # # train_accuracy = get_accuracy(model, trainloader)
-        # writer.add_scalar("Train/Acc", train_accuracy, epoch)
-        # # train_acc_data[tag].append(train_accuracy)
-        # writer.close()
-
-        # test_loss = 0
-        # for images, labels in tqdm(testloader): # get bacth
-        #     outputs = model(images) # call forward inside
-
-        #     loss = loss_function(outputs, labels) # calculate loss
-        #     test_loss += loss.item() # For stat only
-        # writer.add_scalar("Test/Loss", test_loss / ( len(testloader) ), epoch)
-        # # test_loss_data[tag].append(test_loss/(len(testloader)))
-
-        # writer.close()
-
         accuracy = validate(model, val_loader)
-        # writer.add_scalar("Test/Acc", accuracy, epoch)
-        # test_acc_data[tag].append(accuracy)
-        # writer.close()
-
-        # accuracy = validate(model, testloader)
-        print(print(f'epoch {epoch} -> {accuracy}'))
+        print(f'epoch {epoch} -> {accuracy}')
     return accuracy
+
+
+def beautiful_sample(model, solvent, solute):
+    solvent_smiles = get_smiles(solvent)
+    solute_smiles = get_smiles(solute)
+    solvent_mol = Chem.MolFromSmiles(solvent_smiles)
+    solute_mol = Chem.MolFromSmiles(solute_smiles)
+    print(f'solvent {solvent}')
+    print(f'solute {solute}')
+    display(Chem.Draw.MolsToGridImage((solvent_mol, solute_mol)))
+
+    entire = pd.read_table('Tables/Entire_table.tsv')
+    entire = entire.set_index('Unnamed: 0')
+    table_sample = entire[[solvent]].loc[[solute]]
+    sample_ds = SS_Dataset(table_sample, 'solvent_macro_props1', 'solute_TESA')
+    sample_loader = DataLoader(sample_ds)
+
+    with torch.no_grad():
+        model.eval()
+        for vector, G_true in sample_loader:
+            G_pred = model(vector)
+            print(f'predicted {G_pred.squeeze()}, true {G_true.squeeze()}')
+
