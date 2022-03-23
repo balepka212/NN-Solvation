@@ -40,7 +40,7 @@
 39	4methyl2pentanone	CC(C)CC(C)=O
 40	bromoform	BrC(Br)Br
 41	heptanol	CCCCCCCO
-42	trimethylbenzene	Cc1cccc(C)c1C
+42	trimethylbenzene	c1c(ccc(c1C)C)C
 43	odichlorobenzene	C1=CC=C(C(=C1)Cl)Cl
 44	chlorohexane	CCCCCCCl
 45	methylenechloride	ClCCl
@@ -81,10 +81,10 @@
 80	aceticacid	CC(O)=O
 81	tetrahydrofuran	C1CCOC1
 82	fluoroctane	CCCCCCCCF
-83	dimethylpyridine	Cc1cccnc1C
+83	dimethylpyridine	Cc1cccc(C)n1
 84	onitrotoluene	CC1=CC=CC=C1[N+](=O)[O-]
 85	phenylether	O(c1ccccc1)c2ccccc2
 86	2methylpyridine	Cc1ccccn1
-87	methoxyethanol	COC(C)O
+87	methoxyethanol	OCCOC
 88	secbutylbenzene	CCC(C)c1ccccc1
 89	bromooctane	CCCCCCCCBr

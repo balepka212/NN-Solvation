@@ -1,10 +1,18 @@
 # import torch.nn as nn
 # import torch.nn.functional as F
+import pandas as pd
+import torch
 from torch.utils.data import Dataset
 # import torch.nn.functional as F
 from Solvation_1.Vectorizers.vectorizers import *
 from Solvation_1.config import *
 
+
+def norm_parameters(solvent, solute, data='all'):
+    if data =='all':
+        pass
+    else:
+        pass
 
 def create_SS_table(df3):
     Solvents = dict(df3['Solvent'].value_counts().items())
@@ -28,7 +36,7 @@ def create_SS_table(df3):
 
 class SS_Dataset(Dataset):
 
-    def __init__(self, ss_table, solvent_vect, solute_vect, transform=None):
+    def __init__(self, ss_table, solvent_vect, solute_vect, normilize=(False, False, False), full_data='Solvation_1/Tables/Entire_table.tsv'):
 
         self.vectorizers_map = {
             'solvent_macro_props1': {'func': solvent_macro_props1, 'formats': ['tsv'],
@@ -43,7 +51,38 @@ class SS_Dataset(Dataset):
         self.solvent_vect = solvent_vect
         self.solute_vect = solute_vect
         self.data = []
-        self.transform = transform
+        self.normilize = normilize
+        if True in self.normilize:
+            # norm_parameters
+            norm_data = []
+            norm_table = pd.read_table(project_path('Solvation_1/Tables/Entire_table.tsv'))\
+            if norm_table.index.name != 'Unnamed: 0':
+                norm_table = norm_table.reindex('Unnamed: 0')
+            for solvent in norm_table.columns.tolist():
+                for solute in norm_table.index.tolist():
+                    G_solv = norm_table[solvent][solute]
+                    # print(G_solv, solvent, solute)
+                    if not pd.isna(G_solv):
+                        norm_data.append((solvent, solute, G_solv))
+
+            for i in range(len(norm_data)):
+                solvent, solute, G_solv = norm_data[i]
+                X1 = self.solvent_func(solvent, self.solvent_args)
+                X2 = self.solute_func(solute, self.solute_args)
+                # X = torch.cat((X1, X2), 1)
+                y = torch.tensor(G_solv)
+                if i==0:
+                    X_solvent, X_solute, y_all = X1, X2, y
+                else:
+                    X_solvent = torch.vstack((self.X_solvent, X1))
+                    X_solute = torch.vstack((X_solute, X2))
+                    y_all = torch.vstack((y_all, y))
+            self.X_solvent_norm = torch.std_mean(X_solvent, dim=1)
+            self.X_solute_norm = torch.std_mean(X_solute, dim=1)
+            self.y_norm = torch.std_mean(y_all, dim=1)
+
+
+
         if self.table.index.name != 'Unnamed: 0':
             self.table = self.table.set_index('Unnamed: 0')
 
@@ -67,12 +106,28 @@ class SS_Dataset(Dataset):
             self.solute_args.append(read_format(form)(project_path(path)))
 
     def __getitem__(self, i):
+
         solvent, solute, G_solv = self.data[i]
         X1 = self.solvent_func(solvent, self.solvent_args)
         X2 = self.solute_func(solute, self.solute_args)
+
+        G_n, solvent_n, solute_n = self.normalize
+        if solvent_n:
+            std, mean = self.X_solvent_norm
+            X1 = (X1-mean)/std
+
+        if solute_n:
+            std, mean = self.X_solvent_norm
+            X2 = (X2-mean)/std
+
+        if G_n:
+            std, mean = self.y_norm
+            y = (G_solv-mean)/std
+
         X = torch.cat((X1, X2), 1)
-        y = torch.tensor(G_solv)
+        y = torch.tensor(y)
         return X.float(), y.float()
+
 
     def __len__(self):
         return len(self.data)
