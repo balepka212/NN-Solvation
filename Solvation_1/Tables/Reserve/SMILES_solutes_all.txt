@@ -1,0 +1,401 @@
+0	ethanol	CCO
+1	toluene	Cc1ccccc1
+2	2-butanone	CCC(C)=O
+3	n-octane	CCCCCCCC
+4	nitromethane	C[N+]([O-])=O
+5	1,4-dioxane	C1COCCO1
+6	phenol	Oc1ccccc1
+7	acetic acid	CC(O)=O
+8	ethyl acetate	CCOC(C)=O
+9	butyl acetate	CCCCOC(C)=O
+10	propanoic acid	CCC(O)=O
+11	methyl acetate	COC(C)=O
+12	1-hexanol	CCCCCCO
+13	1-propanol	CCCO
+14	1-butanol	CCCCO
+15	1-pentanol	CCCCCO
+16	butylamine	CCCCN
+17	propyl acetate	CCCOC(C)=O
+18	methanol	CO
+19	1-heptanol	CCCCCCCO
+20	ethylamine	CCN
+21	propylamine	CCCN
+22	methyl pentanoate	CCCCC(=O)OC
+23	methyl propanoate	CCC(=O)OC
+24	p-cresol	Cc1ccc(O)cc1
+25	pentyl acetate	CCCCCOC(C)=O
+26	o-cresol	Cc1ccccc1O
+27	p-bromophenol	Oc1ccc(Br)cc1
+28	aniline	Nc1ccccc1
+29	2-hexanone	CCCCC(C)=O
+30	2-pentanone	CCCC(C)=O
+31	2-heptanone	CCCCCC(C)=O
+32	butanoic acid	CCCC(O)=O
+33	3,3-dimethylbutanone	CC(=O)C(C)(C)C
+34	acetone	CC(C)=O
+35	methyl hexanoate	CCCCCC(=O)OC
+36	benzene	c1ccccc1
+37	pyridine	c1ccncc1
+38	m-cresol	Cc1cccc(O)c1
+39	water	O
+40	diethylamine	CCNCC
+41	hydrogen peroxide	OO
+42	pentanoic acid	CCCCC(O)=O
+43	hexanoic acid	CCCCCC(O)=O
+44	4-methylaniline	Cc1ccc(N)cc1
+45	ethylbenzene	CCc1ccccc1
+46	trimethylamine	CN(C)C
+47	chlorobenzene	Clc1ccccc1
+48	acetophenone	CC(=O)c1ccccc1
+49	methylamine	CN
+50	nitrobenzene	[O-][N+](=O)c1ccccc1
+51	bromobenzene	Brc1ccccc1
+52	naphthalene	c1ccc2ccccc2c1
+53	fluorobenzene	Fc1ccccc1
+54	benzamide	NC(=O)c1ccccc1
+55	benzaldehyde	O=Cc1ccccc1
+56	benzonitrile	N#Cc1ccccc1
+57	formaldehyde	C=O
+58	ammonia	N
+59	methyl benzoate	COC(=O)c1ccccc1
+60	dimethylamine	CNC
+61	p-hydroxybenzaldehyde	Oc1ccc(C=O)cc1
+62	2-methylaniline	Cc1ccccc1N
+63	1,4-dichlorobenzene	Clc1ccc(Cl)cc1
+64	1-nitropropane	CCC[N+]([O-])=O
+65	m-xylene	Cc1cccc(C)c1
+66	trimethylphosphate	CO[P](=O)(OC)OC
+67	triethylphosphate	CCO[P](=O)(OCC)OCC
+68	trichloromethane	ClC(Cl)Cl
+69	anisole	COc1ccccc1
+70	t-butanol	CC(C)(C)O
+71	2-methyl-1-nitrobenzene	Cc1ccccc1[N+]([O-])=O
+72	n-pentane	CCCCC
+73	isopropanol	CC(C)O
+74	acetonitrile	CC#N
+75	1,2-ethanediol	OCCO
+76	2-methylpyridine	Cc1ccccn1
+77	tripropylphosphate	CCCO[P](=O)(OCCC)OCCC
+78	o-xylene	Cc1ccccc1C
+79	dipropylamine	CCCNCCC
+80	N-methylaniline	CNc1ccccc1
+81	3-methylaniline	Cc1cccc(N)c1
+82	n-hexane	CCCCCC
+83	tribromomethane	BrC(Br)Br
+84	cyclohexane	C1CCCCC1
+85	1-octanol	CCCCCCCCO
+86	ethyl phenyl ether	CCOc1ccccc1
+87	piperidine	C1CCNCC1
+88	m-hydroxybenzaldehyde	Oc1cccc(C=O)c1
+89	2-methoxyethanol	OCCOC
+90	1,2-dichlorobenzene	Clc1ccccc1Cl
+91	thioanisole	CSc1ccccc1
+92	trichloroethene	ClC=C(Cl)Cl
+93	4-methylpyridine	Cc1ccncc1
+94	2,6-dimethylpyridine	Cc1cccc(C)n1
+95	n-heptane	CCCCCCC
+96	urea	NC(N)=O
+97	nitroethane	CC[N+]([O-])=O
+98	diethyl ether	CCOCC
+99	1-butene	CCC=C
+100	2-methylpyrazine	Cc1cnccn1
+101	hydrazine	NN
+102	1-propanethiol	CCCS
+103	thiophenol	Sc1ccccc1
+104	g-butyrolactone	C1CC(=O)OC1
+105	allyl alcohol	OCC=C
+106	p-xylene	Cc1ccc(C)cc1
+107	dichloromethane	ClCCl
+108	acetamide	CC(N)=O
+109	3-methylpyridine	Cc1cccnc1
+110	thiophene	s1cccc1
+111	tetrachloroethene	ClC(Cl)=C(Cl)Cl
+112	butanal	CCCC=O
+113	2,2,2-trifluoroethanol	OCC(F)(F)F
+114	1,1,1-trichloroethane	CC(Cl)(Cl)Cl
+115	tetrahydropyran	C1CCOCC1
+116	isopropyl ether	CC(C)OC(C)C
+117	tetrahydrofuran	C1CCOC1
+118	n-butane	CCCC
+119	3-pentanone	CCC(=O)CC
+120	E-1,2-dichloroethene	Cl\C=C\Cl
+121	diethyl sulfide	CCSCC
+122	dimethyl 4-nitrophenyl thiophosphate	CO[P](=S)(OC)Oc1ccc(cc1)[N+]([O-])=O
+123	propanal	CCC=O
+124	difluorodichloromethane	FC(F)(Cl)Cl
+125	fluorotrichloromethane	FC(Cl)(Cl)Cl
+126	anthracene	c1ccc2cc3ccccc3cc2c1
+127	hydrogen sulfide	S
+128	bromoethane	CCBr
+129	N,N-dimethylformamide	CN(C)C=O
+130	acetaldehyde	CC=O
+131	n-propane	CCC
+132	2-octanone	CCCCCCC(C)=O
+133	2-ethylpyrazine	CCc1cnccn1
+134	cyclopentanone	O=C1CCCC1
+135	N,N-dimethylacetamide	CN(C)C(C)=O
+136	methylcyclohexane	CC1CCCCC1
+137	1-nitrobutane	CCCC[N+]([O-])=O
+138	propene	CC=C
+139	1,1-dimethyl-3-phenylurea	CN(C)C(=O)Nc1ccccc1
+140	9-methyladenine	Cn1cnc2c(N)ncnc12
+141	quinoline	c1ccc2ncccc2c1
+142	N-methyl-2-pyrrolidinone	CN1CCCC1=O
+143	2-chloropropane	CC(C)Cl
+144	pyrrole	[nH]1cccc1
+145	dibromomethane	BrCBr
+146	chloroethane	CCCl
+147	formamide	NC=O
+148	pentylamine	CCCCCN
+149	1-chloropropane	CCCCl
+150	4-ethylpyridine	CCc1ccncc1
+151	3,5-dimethylpyridine	Cc1cncc(C)c1
+152	1,1,2-trichloroethane	ClCC(Cl)Cl
+153	morpholine	C1COCCN1
+154	Z-1,2-dichloroethene	Cl\C=C/Cl
+155	propionitrile	CCC#N
+156	2,2'-dichlorobiphenyl	Clc1ccccc1c2ccccc2Cl
+157	butanonitrile	CCCC#N
+158	2-nitropropane	CC(C)[N+]([O-])=O
+159	hydrogen	[H]
+160	piperazine	C1CNCCN1
+161	1-bromopropane	CCCBr
+162	2,2-dimethylpropane	CC(C)(C)C
+163	diethyl 4-nitrophenyl thiophosphonate	CCOP(=O)(OC1=CC=C(C=C1)[N+](=O)[O-])SCC
+164	cyclopropane	C1CC1
+165	dimethyl ether	COC
+166	cyclopentane	C1CCCC1
+167	3,5-dibromo-4-hydroxybenzonitrile	Oc1c(Br)cc(cc1Br)C#N
+168	1-decanol	CCCCCCCCCCO
+169	cyclopentanol	OC1CCCC1
+170	ethanethiol	CCS
+171	1-hexene	CCCCC=C
+172	ethene	C=C
+173	s-trans-1,3-butadiene	C=CC=C
+174	dimethyl disulfide	CSSC
+175	2-methylpropene	CC(C)=C
+176	1-pentene	CCCC=C
+177	1-hexyne	CCCCC#C
+178	1-pentyne	CCCC#C
+179	propyne	CC#C
+180	2-methylpropane	CC(C)C
+181	1,1,2-trichloro-1,2,2-trifluoroethane	FC(F)(Cl)C(F)(Cl)Cl
+182	p-dibromobenzene	Brc1ccc(Br)cc1
+183	pentanal	CCCCC=O
+184	tetramethylsilane	C[Si](C)(C)C
+185	2-bromopropane	CC(C)Br
+186	1-bromobutane	CCCCBr
+187	methane	C
+188	ethane	CC
+189	1-bromopentane	CCCCCBr
+190	3-bromopropene	BrCC=C
+191	methyl butanoate	CCCC(=O)OC
+192	ethyne	C#C
+193	methyl formate	COC=O
+194	bromotoluene	Cc1ccccc1Br
+195	2,2-dichloroethenyl dimethyl phosphate	CO[P](=O)(OC)OC=C(Cl)Cl
+196	1-bromo-1-chloro-2,2,2-trifluoroethane	FC(F)(F)C(Cl)Br
+197	dimethyl 4-bromo-2,5-dichlorophenyl thiophosphate	CO[P](=S)(OC)Oc1cc(Cl)c(Br)cc1Cl
+198	dimethyl 2,4,5-trichlorophenyl thiophosphate	CO[P](=S)(OC)Oc1cc(Cl)c(Cl)cc1Cl
+199	O-ethyl O'-4-bromo-2-chlorophenyl S-propyl phosphorothioate	CCCS[P](=O)(OCC)Oc1ccc(Br)cc1Cl
+200	diethyl 2,4-dichlorophenyl thiophosphate	CCO[P](=S)(OCC)Oc1ccc(Cl)cc1Cl
+201	methyl 3-methyl-4-thiomethoxyphenyl thiophosphate	COP(=S)(OC)Oc1ccc(SC)c(C)c1
+202	ethyl 4-cyanophenyl phenylthiophosphonate	CCO[P](=S)(Oc1ccc(cc1)C#N)c2ccccc2
+203	4-amino-3,5,6-trichloropyridine-2-carboxylic acid	Nc1c(Cl)c(Cl)nc(C(O)=O)c1Cl
+204	diethyl disulfide	CCSSCC
+205	3-chloropropene	ClCC=C
+206	bromomethane	CBr
+207	2,2',3'-trichlorobiphenyl	Clc1cccc(c1Cl)c2ccccc2Cl
+208	2,3-dichlorobiphenyl	Clc1cccc(c2ccccc2)c1Cl
+209	1-bromo-isobutane	CC(C)CBr
+210	p-bromotoluene	Cc1ccc(Br)cc1
+211	bromotrifluoromethane	FC(F)(F)Br
+212	chlorodifluoromethane	FC(F)Cl
+213	1,1-difluoroethane	CC(F)F
+214	1-bromo-1,2,2,2-tetrafluoroethane	FC(Br)C(F)(F)F
+215	bromotrichloromethane	ClC(Cl)(Cl)Br
+216	1,1-dichloro-2,2-difluoroethyl methyl ether	COC(Cl)(Cl)C(F)F
+217	1,1,1-trifluoropropan-2-ol	CC(O)C(F)(F)F
+218	1,1,1,3,3,3-hexafluoropropan-2-ol	OC(C(F)(F)F)C(F)(F)F
+219	2,2,2-trifluorethyl vinyl  ether	C=COCC(F)(F)F 
+220	2,6-dichlorobenzonitrile	Clc1cccc(Cl)c1C#N
+221	dimethyl sulfide	CSC
+222	dipropyl sulfide	CCCSCCC
+223	tetrafluoromethane	FC(F)(F)F
+224	N-methylformamide	CNC=O
+225	2,2,4-trimethylpentane	CC(C)CC(C)(C)C
+226	1-butyne	CCC#C
+227	2,4-dimethylpyridine	Cc1ccnc(C)c1
+228	methylhydrazine	CNN
+229	5-nonanone	CCCCC(=O)CCCC
+230	methyl propyl ether	CCCOC
+231	1,2-dimethoxyethane	COCCOC
+232	2,5-dimethylpyridine	Cc1ccc(C)nc1
+233	1-methylthymine	CN1C=C(C)C(=O)NC1=O
+234	3,4-dimethylpyridine	Cc1ccncc1C
+235	2-methylpentane	CCCC(C)C
+236	4-heptanone	CCCC(=O)CCC
+237	octanal	CCCCCCCC=O
+238	ethyl formate	CCOC=O
+239	2,4-dimethylpentane	CC(C)CC(C)C
+240	E-2-pentene	CC/C=C/C
+241	a-[(4,6-dimethoxypyrimidin-2-ylcarbamoyl)sulfamoyl]-o-toluic acid (bensulfuron)	COC1=CC(=NC(=N1)NC(=O)NS(=O)(=O)CC2=CC=CC=C2C(=O)O)OC
+242	butyl nitrate	CCCCO[N+]([O-])=O
+243	nitroglycol	[O-][N+](=O)OCCO[N+]([O-])=O
+244	1,2-dinitroxypropane	CC(CO[N+]([O-])=O)O[N+]([O-])=O
+245	isobutyl nitrate	CC(C)CO[N+]([O-])=O
+246	2-butyl nitrate	CCC(C)O[N+]([O-])=O
+247	5-Bromo-3-sec-butyl-6-methyl-uracil (bromacil)	CCC(C)N1C(=O)C(=C(NC1=O)C)Br
+248	ethylene glycol mononitrate	OCCO.O[N+]([O-])=O
+249	2-chloro-N-(2,6-diethylphenyl)-N-(methoxymethyl)acetamide (alachlor)	CCC1=C(C(=CC=C1)CC)N(COC)C(=O)CCl
+250	2-methyl-2-(methylthio)propanal O-(N-methylcarbamoyl)oxime (aldicarb)	CC(C)(/C=N/OC(=O)NC)SC
+251	O,O-dimethyl S-[(4-oxo-1,2,3-benzotriazin-3(4H)-yl)methyl] dithiophosphate (azinphos methyl)	COP(=S)(OC)SCN1C(=O)C2=CC=CC=C2N=N1
+252	N-butyl-N-ethyl-2,6-dinitro-4-(trifluoromethyl)aniline (benefin)	CCCCN(CC)C1=C(C=C(C=C1[N+](=O)[O-])C(F)(F)F)[N+](=O)[O-]
+253	2-(ethylamino)-4-isopropylamino-6-methyl-thio-s-triazine (ametryn)	CCNC1=NC(=NC(=N1)SC)NC(C)C
+254	phenyl formate 	O=COc1ccccc1
+255	imidazole	[nH]1ccnc1
+256	1,3-diacetyloxypropan-2-yl acetate (glycerol triacetate)	CC(=O)OCC(COC(=O)C)OC(=O)C
+257	n-hexadecane	CCCCCCCCCCCCCCCC
+258	n-undecane	CCCCCCCCCCC
+259	dimethyl 5-(4-chloro)bicyclo[3.2.0]heptyl phosphate	COP(=O)(OC)OC12CCC1CCC2Cl
+260	n-pentadecane	CCCCCCCCCCCCCCC
+261	n-dodecane	CCCCCCCCCCCC
+262	n-decane	CCCCCCCCCC
+263	n-nonane	CCCCCCCCC
+264	water dimer	Did not work
+265	m-bis(trifluoromethyl) benzene	FC(F)(F)c1cccc(c1)C(F)(F)F
+266	1,2-diethoxyethane	CCOCCOCC
+267	N,N-dimethyl-p-methoxybenzamide	COc1ccc(cc1)C(=O)N(C)C
+268	N,N,4-trimethylbenzamide	CN(C)C(=O)c1ccc(C)cc1
+269	bis(2-chloroethyl) ether	ClCCOCCCl
+270	1,1-diacetoxyethane	CC(OC(C)=O)OC(C)=O
+271	1,1-diethoxyethane	CCOC(C)OCC
+272	diethyl propanedioate	CCOC(=O)CC(=O)OCC
+273	dimethoxymethane	COCOC
+274	ethylene glycol diacetate	CC(O)=O.CC(O)=O.OCCO
+275	3a,4,7,7a-tetrahydro-2-[(trichloromethyl)thio]- 1H-isoindole-1,3(2H)-dione (captan)	C1C=CCC2C1C(=O)N(C2=O)SC(Cl)(Cl)Cl
+276	fluoroethane	CCF
+277	1-naphthyl methylcarbamate (carbaryl)	CNC(=O)OC1=CC=CC2=CC=CC=C21
+278	3-t-butyl-5-chloro-6-methyluracil (terbacil)	CC1=C(C(=O)N(C(=O)N1)C(C)(C)C)Cl
+279	S-propyl butyl(ethyl)thiocarbamate (pebulate)	CCCCN(CC)C(=O)SCCC
+280	O,O-diethyl S-ethylthiomethyl phosphorodithioate (phorate)	CCOP(=S)(OCC)SCSCC
+281	N-cyclopropylmethyl-2,6-dinitro-N-propyl-4-trifluoromethylaniline (profluralin)	CCCN(CC1CC1)C2=C(C=C(C=C2[N+](=O)[O-])C(F)(F)F)[N+](=O)[O-]
+282	N2,N4-diisopropyl-6-methylthio-1,3,5-triazine-2,4-diamine (prometryn)	CC(C)NC1=NC(=NC(=N1)SC)NC(C)C
+283	N-(3,4-dichlorophenyl)propanamide (propanil)	CCC(=O)NC1=CC(=C(C=C1)Cl)Cl
+284	5-amino-4-chloro-2-phenyl-3-(2H)-pyridazinone (pyrazon)	C1=CC=C(C=C1)N2C(=O)C(=C(C=N2)N)Cl
+285	6-chloro-N,N'-diethyl-1,3,5-triazine-2,4-diamine (simazine)	CCNC1=NC(=NC(=N1)Cl)NCC
+286	methyl 2-(4,6-dimethylpyrimidin-2-ylcarbamoylsulfamoyl)benzoate (sulfometuron-methyl)	CC1=CC(=NC(=N1)NC(=O)NS(=O)(=O)C2=CC=CC=C2C(=O)OC)C
+287	N2-tert-butyl-N4-ethyl-6-methylthio-1,3,5-triazine-2,4-diamine (terbutryn)	CCNC1=NC(=NC(=N1)SC)NC(C)(C)C
+288	nitroxyacetone	CC(=O)CO[N+]([O-])=O
+289	3-(4-methoxy-6-methyl-1,3,5-triazin-2-ylcarbamoylsulfamoyl)thiophene-2-carboxylic acid (thifensulfuron)	CC1=NC(=NC(=N1)OC)NC(=O)NS(=O)(=O)C2=C(SC=C2)C(=O)O
+290	dimethyl (RS)-2,2,2-trichloro-1-hydroxyethylphosphonate (trichlorfon)	COP(=O)(C(C(Cl)(Cl)Cl)O)OC
+291	a,a,a-trifluoro-2,6-dinitro-N,N-dipropyl-p-toluidine (trifluralin)	CCCN(CCC)C1=C(C=C(C=C1[N+](=O)[O-])C(F)(F)F)[N+](=O)[O-]
+292	S-propyl dipropyl(thiocarbamate) (vernolate)	CCCN(CCC)C(=O)SCCC
+293	4-amino-4'-nitroazobenzene	Nc1ccc(cc1)N=Nc2ccc(cc2)[N+]([O-])=O
+294	1-amino-4-anilinoanthraquinone	Nc1ccc(Nc2ccccc2)c3C(=O)c4ccccc4C(=O)c13
+295	1,4,5,8-tetraminoanthraquinone	Nc1ccc(N)c2C(=O)c3c(N)ccc(N)c3C(=O)c12
+296	1-amino-anthraquinone	Nc1cccc2C(=O)c3ccccc3C(=O)c12
+297	O,O-diethyl-O-4-nitro-phenylthiophosphate (parathion)	CCOP(=S)(OCC)OC1=CC=C(C=C1)[N+](=O)[O-]
+298	4-mesyl-2,6-dinitro-N,N-dipropylaniline (nitralin)	CCCN(CCC)C1=C(C=C(C=C1[N+](=O)[O-])S(=O)(=O)C)[N+](=O)[O-]
+299	2,3-dihydro-2,2-dimethyl-7-benzofuranyl methylcarbamate (carbofuran)	CC1(CC2=C(O1)C(=CC=C2)OC(=O)NC)C
+300	N1,N1-diethyl-2,6-dinitro-4-trifluoromethyl-m-phenylenediamine (dinitramine)	CCN(CC)C1=C(C=C(C(=C1[N+](=O)[O-])N)C(F)(F)F)[N+](=O)[O-]
+301	octachloro-4,7-methanohydroindane (chlordane)	C1C2C(C(C1Cl)Cl)C3(C(=C(C2(C3(Cl)Cl)Cl)Cl)Cl)Cl
+302	phosphoric acid [(E)-2-chloro-1-(2,4-dichlorophenyl)vinyl] diethyl ester (chlorfenvinphos)	CCOP(=O)(OCC)O/C(=C/Cl)/C1=C(C=C(C=C1)Cl)Cl
+303	ethyl 2-(4-chloro-6-methoxypyrimidin-2-ylcarbamoylsulfamoyl)benzoate (chlorimuron ethyl)	CCOC(=O)C1=CC=CC=C1S(=O)(=O)NC(=O)NC2=NC(=CC(=N2)Cl)OC
+304	trichloro(nitro)methane (chloropicrin)	[O-][N+](=O)C(Cl)(Cl)Cl.[O-][N+](=O)C(Cl)(Cl)Cl
+305	O,O-diethyl O-3,5,6-trichloro-2-pyridyl phosphorothioate (chlorpyrifos)	CCOP(=S)(OCC)OC1=NC(=C(C=C1Cl)Cl)Cl
+306	S-(RS)-2-chloro-1-phthalimidoethyl O,O-diethyl phosphorodithioate (dialifor)	CCOP(=S)(OCC)SC(CCl)N1C(=O)C2=CC=CC=C2C1=O
+307	diethoxy-[(2-isopropyl-6-methyl-4-pyrimidinyl)oxy]-thioxophosphorane (diazinon)	CCO[P](=S)(OCC)Oc1cc(C)nc(n1)C(C)C.CCO[P](=S)(OCC)Oc2cc(C)nc(n2)C(C)C
+308	3,6-dichloro-2-methoxybenzoic acid (dicamba)	COC1=C(C=CC(=C1C(=O)O)Cl)Cl
+309	(RS)-2-sec-butyl-4,6-dinitrophenol (dinoseb)	CCC(C)C1=C(C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-])O
+310	methyl 2-(4-methoxy-6-methyl-1,3,5-triazin-2-ylcarbamoylsulfamoyl)benzoate (metsulfuron methyl)	CC1=NC(=NC(=N1)OC)NC(=O)NS(=O)(=O)C2=CC=CC=C2C(=O)OC
+311	6,7,8,9,10,10-hexachloro-1,5,5a,6,9,9a-hexahydro-6,9-methano-2,4,3-benzodioxathiepine-3-oxide (endosulfan alpha)	C1C2C(COS(=O)O1)C3(C(=C(C2(C3(Cl)Cl)Cl)Cl)Cl)Cl
+312	(1R,4S,4aS,5S,6S,7R,8R,8aR)-1,2,3,4,10,10-hexachloro-1,4,4a,5,6,7,8,8a-octahydro-6,7-epoxy-1,4:5,8-dimethanonaphthalene (endrin)	C1C2C3C(C1C4C2O4)C5(C(=C(C3(C5(Cl)Cl)Cl)Cl)Cl)Cl
+313	O,O,O',O'-tetraethyl S,S'-methylene bis(phosphorodithioate) (ethion)	CCOP(=S)(OCC)SCSP(=S)(OCC)OCC
+314	1,4,5,6,7,8,8-heptachloro-3a,4,7,7a-tetrahydro-4,7-methanoindene (heptachlor)	C1=CC(C2C1C3(C(=C(C2(C3(Cl)Cl)Cl)Cl)Cl)Cl)Cl
+315	3,5,5-trimethyl-2-cyclohexen-1-one (isophorone)	CC1=CC(=O)CC(C)(C)C1.CC2=CC(=O)CC(C)(C)C2
+316	1,2,3,4,5,6-hexachlorocyclohexane (lindane)	C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl
+317	2-(dimethoxyphosphinothioylthio) butanedioic acid diethyl ester (malathion)	CCOC(=O)CC(C(=O)OCC)SP(=S)(OC)OC
+318	N-methylcarbamic acid [1-(methylthio)ethylideneamino] ester (methomyl)	C/C(=N\OC(=O)NC)/SC
+319	S-4-chlorophenylthiomethyl O,O-diethyl phosphorodithioate (carbophenothion)	CCOP(=S)(OCC)SCSC1=CC=C(C=C1)Cl
+320	dimethylsulfoxide	C[S](C)=O
+321	dimethyl methylphosphonate	CO[P](C)(=O)OC
+322	cis-1,2-dimethylcyclohexane	C[C@@H]1CCCC[C@@H]1C
+323	chloroethene	ClC=C
+324	3,aminoaniline	C1=CC(=CC(=C1)N)N
+325	1,1-dimethylhydrazine	CN(C)N
+326	2-ethylpyrazine	CCc1cnccn1
+327	N,N-dimethylaniline	CN(C)c1ccccc1
+328	chlorotoluene	Cc1ccccc1Cl
+329	o-chlorotoluene	Cc1ccccc1Cl
+330	N-ethylaniline	CCNc1ccccc1
+331	aniline 	Nc1ccccc1
+332	triethylamine	CCN(CC)CC
+333	piperidine  	C1CCNCC1
+334	N,N'-dimethylpiperazine	CN1CCN(C)CC1
+335	N-methylpiperazine	CN1CCNCC1
+336	pyrrolidine	C1CCNC1
+337	azetidine	C1CNC1
+338	benzylalcohol	OCc1ccccc1
+339	butenyne	C=CC#C
+340	carbontet	C(Cl)(Cl)(Cl)Cl
+341	dichloroethane	ClCCCl
+342	2-chloropentane	CCCC(C)Cl
+343	3-ethyl-2-methoxypyrazine	CCc1nccnc1OC
+344	1-fluorooctane	CCCCCCCCF
+345	fluoromethane	CF
+346	hexafluoroethane	FC(F)(F)C(F)(F)F
+347	octafluoropropane	FC(F)(F)C(F)(F)C(F)(F)F
+348	N-methylmorpholine	CN1CCOCC1
+349	perfluorobenzene	Fc1c(F)c(F)c(F)c(F)c1F
+350	chloromethane	CCl
+351	2-methoxyethanamine	COCCN
+352	1-chloropentane	CCCCCCl
+353	2-pyrrolidinone	O=C1CCCN1
+354	Z-N-methylacetamide	CC(=O)NC
+355	E-N-methylacetamide	CC(=O)NC
+356	1,2-ethanediamine	NCCN
+357	1,1,1,2-tetrachloroethane	ClCC(Cl)(Cl)Cl
+358	hexachloroethane	ClC(Cl)(Cl)C(Cl)(Cl)Cl
+359	2-chlorobutane	CCC(C)Cl
+360	ethyl peroxide	CCOOCC
+361	methyl peroxide	COOC
+362	methyl octanoate	CCCCCCCC(=O)OC
+363	m-xylene 	Cc1cccc(C)c1
+364	tetralin	C1CCc2ccccc2C1
+365	trimethylbenzene	c1c(ccc(c1C)C)C
+366	mesitylene	Cc1cc(C)cc(C)c1
+367	tbutylbenzene	CC(C)(C)C1=CC=CC=C1
+368	butylbenzene	CCCCc1ccccc1
+369	isopropylbenzene	CC(C)c1ccccc1
+370	chrysene	c1ccc2c(c1)ccc3c4ccccc4ccc23
+371	o-xylene 	Cc1ccccc1C
+372	isopropanol 	CC(C)O
+373	toluene 	Cc1ccccc1
+374	carbondisulfide	S=C=S
+375	bis(2-chloroethyl)sulfide	ClCCSCCCl
+376	2,6-dichlorothiobenzamide	NC(=S)c1c(Cl)cccc1Cl
+377	1-fluorohexane	CCCCCCF
+378	phosphine	P
+379	cyclopentene	C1CC=CC1
+380	methanethiol	CS
+381	isobutanol	CC(C)CO
+382	ethyloctadecanoate	CCCCCCCCCCCCCCCCCC(=O)OCC
+383	t-butyl methyl ether	COC(C)(C)C
+384	cyclohexanone	O=C1CCCCC1
+385	4-methyl-2-pentanone	CC(C)CC(C)=O
+386	chlorofluoromethane	FCCl
+387	1-bromo-2-chloroethane	ClCCBr
+388	dibutylether	CCCCOCCCC
+389	1-chloro-2,2,2-trifluoroethane	FC(F)(F)CCl
+390	anisole 	COc1ccccc1
+391	t-butyl methyl ether 	COC(C)(C)C
+392	secbutanol	CCC(C)O
+393	chloropentaflouroethane	C(C(F)(F)Cl)(F)(F)F
+394	1,2-dimethoxyethane	COCCOC
+395	1-chloro-2,2,2-trifluoroethyl difluoromethyl ether	FC(F)OC(Cl)C(F)(F)F
+396	methyl isopropyl ether	COC(C)C
+397	methyl isopropyl ether 	COC(C)C
+398	diethyl ether 	CCOCC
+399	1-nonanol	CCCCCCCCCO
+400	(2-dimethylamino-5,6-dimethyl-pyrimidin-4-yl) N,N-dimethylcarbamate (pirimor, pirimicarb)	CC1=C(N=C(N=C1OC(=O)N(C)C)N(C)C)C

@@ -4,6 +4,7 @@ from pyarrow import feather
 
 
 def project_path(path):
+    """TODO description"""
     project = os.path.dirname(os.path.abspath(__file__))
     final_path = project + '/../' + path
     # print(final_path)
@@ -11,6 +12,7 @@ def project_path(path):
 
 
 def read_format(format):
+    """TODO description"""
     if format == 'feather':
         return feather.read_feather
     elif format == 'tsv':
@@ -21,4 +23,3 @@ def read_format(format):
         return pd.read_table
     else:
         print(f'No such format option {format}')
-

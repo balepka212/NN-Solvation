@@ -10,11 +10,8 @@ from Solvation_1.config import *
 import shutil
 import os
 import errno
-
-
-
-
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def save_ckp(state, is_best, checkpoint_path, best_model_path):
@@ -92,7 +89,7 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
             # print(f'out: {outputs.shape}')
             # print(f'G: {G_true.shape}')
 
-            loss = loss_function(outputs.squeeze(), G_true)  # calculate loss
+            loss = loss_function(outputs.squeeze(), G_true.squeeze())  # calculate loss
             loss.backward()  # calculate gradients
             optimizer.step()  # performs a single optimization step (parameter update).
             optimizer.zero_grad()  # sets the gradients of all optimized tensors to zero.
@@ -134,6 +131,7 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
 
 
 def beautiful_sample(model, solvent, solute):
+    """TODO description"""
     solvent_smiles = get_smiles(solvent)
     solute_smiles = get_smiles(solute)
     solvent_mol = Chem.MolFromSmiles(solvent_smiles)
@@ -142,7 +140,7 @@ def beautiful_sample(model, solvent, solute):
     print(f'solute {solute}')
     display(Chem.Draw.MolsToGridImage((solvent_mol, solute_mol)))
 
-    entire = pd.read_table('Tables/Entire_table.tsv')
+    entire = pd.read_table(project_path('Solvation_1/Tables/Entire_table3.tsv'))
     entire = entire.set_index('Unnamed: 0')
     table_sample = entire[[solvent]].loc[[solute]]
     sample_ds = SS_Dataset(table_sample, 'solvent_macro_props1', 'solute_TESA')
@@ -153,3 +151,29 @@ def beautiful_sample(model, solvent, solute):
         for vector, G_true in sample_loader:
             G_pred = model(vector)
             print(f'predicted {G_pred.squeeze()}, true {G_true.squeeze()}')
+
+
+def plot_losses(file_path):
+    """TODO description
+        plots loss dynamics upon epochs:
+        train, val, solvent test and solute test MSEs"""
+    losses_dict = {}
+    losses = []
+    with open(file_path, 'r') as f:
+        for line in f:
+            losses.append(line.split('\t'))
+    data = list(zip(*losses[1:]))
+    # ar = np.array(list(int(float(x)) for x in data[0]))
+    # print(ar)
+    # print(list(ar[(ar % xtick_distance == 0)]))
+    # plt.xticks(list(ar[(ar % xtick_distance == 0)]))
+    plt.figure(figsize=(12, 8))
+    for i, column in enumerate(losses[0]):
+        column = column.strip()
+        losses_dict[column] = list(float(x) for x in data[i])
+        if i != 0:
+            plt.subplot(220+i)
+            plt.title(column)
+            plt.plot(losses_dict['epoch'], losses_dict[column])
+        else:
+            losses_dict[column] = list(int(x) for x in losses_dict[column])
