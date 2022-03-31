@@ -24,7 +24,7 @@ def save_ckp(state, is_best, checkpoint_path, best_model_path):
     f_path = checkpoint_path
     # save checkpoint data to the path given, checkpoint_path
     torch.save(state, f_path)
-    print(f_path)
+    # print(f_path)
     # if it is the best model, min validation loss
     if is_best:
         best_fpath = best_model_path
@@ -62,8 +62,9 @@ def validate(model, loader):
             outputs = model(vector)
             total += G_true.size(0)
             all_MSE += loss(outputs.squeeze(), G_true.squeeze())
+    # print(f'len = {len(loader.dataset)}')
 
-    return all_MSE / len(loader.dataset)
+    return all_MSE/len(loader.dataset)
 
 
 def train(model, train_loader, val_loader, solvent_test_loader, solute_test_loader,  loss_function, optimizer,
@@ -82,7 +83,7 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
 
     for epoch in range(epochs):
         hist_loss = 0
-        for vector, G_true in tqdm(train_loader):  # get batch
+        for vector, G_true in train_loader:  # get batch
             vector, G_true = vector.to(device), G_true.to(device)
             model.to(device)
             outputs = model(vector)  # call forward inside
@@ -120,17 +121,18 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
             save_ckp(checkpoint, False, checkpoint_path, best_model_path)
 
             if val_loss <= val_loss_min:
-                print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(val_loss_min, val_loss))
+                print(f'epoch {epoch}: val loss ({val_loss_min} -> {val_loss}). Saving model')
                 # save checkpoint as best model
                 save_ckp(checkpoint, True, checkpoint_path, best_model_path)
                 val_loss_min = val_loss
-
-            print(f'epoch {epoch} -> {val_loss}')
+            else:
+                print(f'epoch {epoch}: val loss ({val_loss_min} -> {val_loss})')
+            # print(f'epoch {epoch}: val loss {val_loss}')
 
     return val_loss_min
 
 
-def beautiful_sample(model, solvent, solute):
+def beautiful_sample(model, solvent, solute, normalize=(True, True, True)):
     """TODO description"""
     solvent_smiles = get_smiles(solvent)
     solute_smiles = get_smiles(solute)
@@ -143,14 +145,15 @@ def beautiful_sample(model, solvent, solute):
     entire = pd.read_table(project_path('Solvation_1/Tables/Entire_table3.tsv'))
     entire = entire.set_index('Unnamed: 0')
     table_sample = entire[[solvent]].loc[[solute]]
-    sample_ds = SS_Dataset(table_sample, 'solvent_macro_props1', 'solute_TESA')
+    sample_ds = SS_Dataset(table_sample, 'solvent_macro_props1', 'solute_TESA', normalize=normalize, show_norm_params=False)
     sample_loader = DataLoader(sample_ds)
 
     with torch.no_grad():
         model.eval()
         for vector, G_true in sample_loader:
+            std, mean = sample_ds.norm_params['G']
             G_pred = model(vector)
-            print(f'predicted {G_pred.squeeze()}, true {G_true.squeeze()}')
+            print(f'predicted {(G_pred*std+mean).squeeze()}, true {(G_true*std+mean).squeeze()}')
 
 
 def plot_losses(file_path):

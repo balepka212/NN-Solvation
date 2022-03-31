@@ -1,5 +1,6 @@
 import torch
 import pickle as pkl
+from rdkit import Chem
 
 
 def test_sp(solvent, args=None):
@@ -35,3 +36,5 @@ def get_smiles(compound, args=('../Solvation_1/Tables/get_SMILES.pkl',)):
     with open(args[0], 'rb') as f:
         dictionary = pkl.load(f)
     return dictionary[compound]
+
+
