@@ -2,8 +2,8 @@ from Solvation_1.config import *
 import pickle as pkl
 
 
-def create_smiles_dict(solvent_table='Solvation_1/Tables/SMILES_solvents_all.txt',
-                       solute_table='Solvation_1/Tables/SMILES_solutes_all.txt'):
+def create_smiles_dict(solvent_table='Solvation_1/Tables/Reserve/SMILES_solvents_all.txt',
+                       solute_table='Solvation_1/Tables/Reserve/SMILES_solutes_all_2.txt'):
     """TODO description
      create dictionary from tables of i, compound, smiles
      solvent_table: table with solvents
@@ -16,7 +16,7 @@ def create_smiles_dict(solvent_table='Solvation_1/Tables/SMILES_solvents_all.txt
                 i, compound, smiles = line.split('\t')
                 smiles = smiles.strip()
                 # print(i, compound, smiles)
-                smiles_dict[compound] = smiles
+                smiles_dict[compound.replace(' ', '')] = smiles
 
     make_dict(solvent_table)
     make_dict(solute_table)

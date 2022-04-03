@@ -2,6 +2,24 @@ import torch.nn as nn
 
 
 class LinearNet3(nn.Module):
+    """
+        Class represent Linear Network with 3 layers.
+
+        Attributes
+        ----------
+        in_features : int
+            Length of input tensor for first linear layer
+        flatten : function
+            function that flattens a tensor
+        linear_relu_stack : nn.Sequential
+            Main stack to define a network
+
+        Methods
+        -------
+        forward(x)
+            predicts a delta_G from given x
+        """
+
     def __init__(self, in_features=10):
         super(LinearNet3, self).__init__()
         self.in_features = in_features
@@ -17,6 +35,7 @@ class LinearNet3(nn.Module):
         )
 
     def forward(self, x):
+        """predicts a delta_G from given x"""
         x = self.flatten(x)
         G_solv = self.linear_relu_stack(x)
         return G_solv

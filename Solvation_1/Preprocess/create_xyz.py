@@ -1,20 +1,23 @@
 import periodictable as pt
+from pyarrow import feather
+from Solvation_1.config import *
 
 
-def make_xyz(file, output):
+
+def xyz_from_file(file, output):
     """TODO description"""
     atom_dict = pt.elements.__dict__['_element']
     with open(file, 'r') as f:
         lines = f.readlines()
         n_lines = len(lines)
-        print(n_lines)
+        # print(n_lines)
         out_name = output+'/copy_'+file.split('/')[-1]
         with open(out_name, 'w+') as out:
             out.write(str(n_lines-3)+'\n')
 
         for i, line in enumerate(lines):
-            print(line.split('   '))
-            print(i)
+            # print(line.split('   '))
+            # print(i)
             if i == 0:
                 with open(out_name, 'a') as out:
                     out.write(out_name.split('/')[-1]+'\n')
@@ -29,7 +32,15 @@ def make_xyz(file, output):
                     out.write(f'{atom}   {x}   {y}   {z}')
 
 
-file_path = '/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSolDatabase_v2012/all_solutes/i133.xyz'
-out_folder = '/Users/balepka/Downloads'
+def xyz_from_name(name, output, df3_path='Solvation_1/Tables/df3_3', files_folder='Solvation_1/Tables/Reserve/all_solutes'):
+    df3 = feather.read_feather(project_path(df3_path))
+    file_handle = df3[df3.SoluteName == name]['FileHandle'].tolist()[0]
+    file_path = project_path(files_folder+'/'+file_handle+'.xyz')
+    xyz_from_file(file_path, output)
 
-make_xyz(file_path, out_folder)
+
+
+# file_path = '/Users/balepka/Yandex.Disk.localized/Study/Lab/Neural Network/MNSolDatabase_v2012/all_solutes/i133.xyz'
+# out_folder = '/Users/balepka/Downloads'
+#
+# xyz_from_file(file_path, out_folder)
