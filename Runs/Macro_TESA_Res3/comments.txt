@@ -1,3 +1,0 @@
-
-learning rate 1e-5
-other comment
