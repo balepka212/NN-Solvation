@@ -35,7 +35,7 @@ class LinearNet3(nn.Module):
         )
 
     def forward(self, x):
-        """predicts a delta_G from given x"""
+        """ predicts a delta_G from given x """
         x = self.flatten(x)
         G_solv = self.linear_relu_stack(x)
         return G_solv

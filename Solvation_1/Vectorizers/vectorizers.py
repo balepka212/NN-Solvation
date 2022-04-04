@@ -3,6 +3,7 @@ import pickle as pkl
 from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit import RDLogger
+from Solvation_1.config import project_path
 
 
 def test_sp(solvent, args=None, params=None):
@@ -85,7 +86,7 @@ def solvent_macro_props1(solvent, args, params=None):
     return out
 
 
-def get_smiles(compound, args=('../Solvation_1/Tables/get_SMILES.pkl',), params=None):
+def get_smiles(compound, args=('Solvation_1/Tables/get_SMILES.pkl',), params=None):
     """
     Returns SMILES notation of given compound.
 
@@ -98,8 +99,8 @@ def get_smiles(compound, args=('../Solvation_1/Tables/get_SMILES.pkl',), params=
     params: None
         not needed here
     """
-
-    with open(args[0], 'rb') as f:
+    path = project_path(args[0])
+    with open(path, 'rb') as f:
         dictionary = pkl.load(f)    # load SMILES dictionary
     return dictionary[compound.replace(' ', '')]
 

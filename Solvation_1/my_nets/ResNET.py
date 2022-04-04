@@ -15,16 +15,16 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 
-class MyDataset(Dataset):
-    def __init__(self, data, label):
-        self.data = data
-        self.label = label
-
-    def __getitem__(self, index):
-        return (torch.tensor(self.data[index], dtype=torch.float), torch.tensor(self.label[index], dtype=torch.long))
-
-    def __len__(self):
-        return len(self.data)
+# class MyDataset(Dataset):
+#     def __init__(self, data, label):
+#         self.data = data
+#         self.label = label
+#
+#     def __getitem__(self, index):
+#         return (torch.tensor(self.data[index], dtype=torch.float), torch.tensor(self.label[index], dtype=torch.long))
+#
+#     def __len__(self):
+#         return len(self.data)
 
 class MyConv1dPadSame(nn.Module):
     """

@@ -199,6 +199,7 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
             else:
                 print(f'epoch {epoch}: val loss ({val_loss_min} -> {val_loss})')
             # print(f'epoch {epoch}: val loss {val_loss}')
+    shutil.copyfile(run_folder + '/run_log.tsv', project_path('Solvation_1/Run_results/'+ckp_path+'/run_log.tsv'))
 
     return val_loss_min
 
@@ -280,3 +281,5 @@ def plot_losses(file_path):
         else:
             # if epoch column - make it integer
             losses_dict[column] = list(int(x) for x in losses_dict[column])
+    plt.savefig(file_path.rsplit('/', maxsplit=1)[0] + '/losses_plot.png')
+    plt.show()

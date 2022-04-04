@@ -162,21 +162,26 @@ class SS_Dataset(Dataset):
                     X_solute = torch.vstack((X_solute, X2))
                     y_all = torch.vstack((y_all, y))
 
+            def std_mean_no_zero(tensor, dim=0):
+                """ Prevents std to be 0. Replaces 0 std with 1."""
+                s1, m1 = torch.std_mean(tensor, dim=dim)
+                s2 = s1 + (s1 == 0) * 1
+                return tuple((s2, m1))
 
-            self.X_solvent_norm = torch.std_mean(X_solvent, dim=0)
-            self.X_solute_norm = torch.std_mean(X_solute, dim=0)
-            self.y_norm = torch.std_mean(y_all, dim=0)
+            self.X_solvent_norm = std_mean_no_zero(X_solvent, dim=0)
+            self.X_solute_norm = std_mean_no_zero(X_solute, dim=0)
+            self.y_norm = std_mean_no_zero(y_all, dim=0)
             self.norm_params = {'Solvent': self.X_solvent_norm, 'Solute': self.X_solute_norm, 'G': self.y_norm}
 
             # If needed norm parameters will be printed
             if show_norm_params:
-                print(f'length check-> Solvent: {len(X_solvent)}, Solute: {len(X_solute)}, G_solv: {len(y_all)}')
+                print(f'length check-> Solvent: {len(X_solvent)}, Solute: {len(X_solute)}, G_solv: {len(y_all)}\n')
                 if solvent_n:
                     print(f'Solvent\n std: {self.X_solvent_norm[0]} \n mean: {self.X_solvent_norm[1]}')
                 if solute_n:
                     print(f'Solute\n std: {self.X_solute_norm[0]} \n mean: {self.X_solute_norm[1]}')
                 if G_n:
-                    print(f'G_solv\n std: {self.y_norm[0]} \n mean: {self.y_norm[1]}')
+                    print(f'G_solv\n std: {self.y_norm[0]} \n mean: {self.y_norm[1]}\n')
 
     def __getitem__(self, i):
         solvent, solute, G_solv = self.data[i]

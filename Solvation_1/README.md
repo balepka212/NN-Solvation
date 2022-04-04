@@ -35,5 +35,24 @@ taken from MNSol database calculated parameter of Total Exposed Surface Area. Mo
 properties of solvent: nD, alpha, beta, gamma, epsilon, phi, psi.
 ## MorganFingerprints
 calculated morgan fingerprints (putlink)
+# Table with Solvent-Solute Experiment links
+## Linear
 
+|Solvent➡️ <br/>⬇️Solute|Macro|Morgan|other|
+|----|-----|-----|-----|
+|TESA|[Macro TESA](Run_results/Macro_TESA_Lin1)|[Morgan TESA](Run_results/Morgan_2_124_TESA_Lin1)|     |
+|Classification|     |     |     |
+|Morgan|[Macro Morgan](Run_results/Macro_Morgan_2_124_Lin1) |     |     |
+
+# Pipe table
+|              | Header 1        | Header 2                       || Header 3                       ||
+|              | Subheader 1     | Subheader 2.1  | Subheader 2.2  | Subheader 3.1  | Subheader 3.2  |
+|==============|-----------------|----------------|----------------|----------------|----------------|
+| Row Header 1 | 3row, 3col span                                 ||| Colspan only                   ||
+| Row Header 2 |       ^                                         ||| Rowspan only   | Cell           |
+| Row Header 3 |       ^                                         |||       ^        | Cell           |
+| Row Header 4 |  Row            |  Each cell     |:   Centered   :| Right-aligned :|: Left-aligned  |
+:              :  with multiple  :  has room for  :   multi-line   :    multi-line  :  multi-line    :
+:              :  lines.         :  more text.    :      text.     :         text.  :  text.         :
+|--------------|-----------------|----------------|----------------|----------------|----------------|
 # The End
