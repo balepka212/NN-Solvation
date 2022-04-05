@@ -20,7 +20,8 @@ A package with some .py files to create and train networks
 ### &nbsp; &nbsp; [LinearNet](my_nets/LinearNet.py)
 &nbsp; &nbsp; &nbsp; A file that contains Linear Network used for training
 ### &nbsp; &nbsp; [ResNET](my_nets/ResNET.py)
-&nbsp; &nbsp; &nbsp; A file that contains 1D ResNET used for training
+&nbsp; &nbsp; &nbsp; A file that contains 1D ResNET used for training.
+https://github.com/hsd1503/resnet1d/blob/master/util.py
 ## [Vectorizers](Vectorizers)
 A package vectorizers.py that contains vectorizers functions used in this project
 ## [Tables](Tables)
@@ -38,21 +39,18 @@ calculated morgan fingerprints (putlink)
 # Table with Solvent-Solute Experiment links
 ## Linear
 
-|Solvent➡️ <br/>⬇️Solute|Macro|Morgan|other|
-|----|-----|-----|-----|
-|TESA|[Macro TESA](Run_results/Macro_TESA_Lin1)|[Morgan TESA](Run_results/Morgan_2_124_TESA_Lin1)|     |
-|Classification|     |     |     |
-|Morgan|[Macro Morgan](Run_results/Macro_Morgan_2_124_Lin1) |     |     |
+|Solvent➡️ <br/>⬇️Solute|Macro| Morgan                                               |other|
+|----|-----|------------------------------------------------------|-----|
+|TESA|[Macro TESA](Run_results/Macro_TESA_Lin1)| [Morgan TESA](Run_results/Morgan_2_124_TESA_Lin1)    |     |
+|Classification|     |                                                      |     |
+|Morgan|[Macro Morgan](Run_results/Macro_Morgan_2_124_Lin1) | [Morgan Morgan](Run_results/Macro_Morgan_2_124_Lin1) |     |
 
-# Pipe table
-|              | Header 1        | Header 2                       || Header 3                       ||
-|              | Subheader 1     | Subheader 2.1  | Subheader 2.2  | Subheader 3.1  | Subheader 3.2  |
-|==============|-----------------|----------------|----------------|----------------|----------------|
-| Row Header 1 | 3row, 3col span                                 ||| Colspan only                   ||
-| Row Header 2 |       ^                                         ||| Rowspan only   | Cell           |
-| Row Header 3 |       ^                                         |||       ^        | Cell           |
-| Row Header 4 |  Row            |  Each cell     |:   Centered   :| Right-aligned :|: Left-aligned  |
-:              :  with multiple  :  has room for  :   multi-line   :    multi-line  :  multi-line    :
-:              :  lines.         :  more text.    :      text.     :         text.  :  text.         :
-|--------------|-----------------|----------------|----------------|----------------|----------------|
+## ResNET
+
+|Solvent➡️ <br/>⬇️Solute| Macro                                               | Morgan                                               |other|
+|----|-----------------------------------------------------|------------------------------------------------------|-----|
+|TESA| [Macro TESA](Run_results/Macro_TESA_Res1)           | [Morgan TESA](Run_results/Morgan_2_124_TESA_Res1)    |     |
+|Classification|                                                     |                                                      |     |
+|Morgan| [Macro Morgan](Run_results/Macro_Morgan_2_124_Res1) | [Morgan Morgan](Run_results/Macro_Morgan_2_124_Res1) |     |
+
 # The End
