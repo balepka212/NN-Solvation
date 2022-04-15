@@ -1,4 +1,4 @@
-from Solvation_1.my_nets.Experiment import Experiment
+from Solvation_1.my_nets.Experiment import Experiment, Continue_experiment
 
 kwargs = {
         'runs_folder': 'Example_Res3',

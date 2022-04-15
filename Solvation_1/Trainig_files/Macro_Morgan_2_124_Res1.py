@@ -1,4 +1,4 @@
-from Solvation_1.my_nets.Experiment import Experiment
+from Solvation_1.my_nets.Experiment import Experiment, Continue_experiment
 
 kwargs = {
         'runs_folder': 'Macro_Morgan_2_124_Res1',
@@ -9,7 +9,8 @@ kwargs = {
         'norm_bools': (True, True, True),
         'net_dict': {'base_filters': 2, 'kernel_size': 3, 'stride': 2, 'groups': 1, 'n_block': 3,
                      'n_classes': 1, 'use_bn': True, 'use_do': True, 'verbose': False},
-        'epochs': 10000
+        'ckp_file': 'Solvation_1/Runs/Macro_Morgan_2_124_Res1/best/ep_9980_best.pt',
+        'epochs': 20000
         }
 
-Experiment(**kwargs)
+Continue_experiment(**kwargs)

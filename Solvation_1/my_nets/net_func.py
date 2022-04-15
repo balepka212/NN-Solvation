@@ -29,15 +29,11 @@ def save_ckp(state, is_best, checkpoint_path, best_model_path):
         path to save best model
     """
 
-    f_path = checkpoint_path
-    # save checkpoint data to the path given, checkpoint_path
-    torch.save(state, f_path)
-    # print(f_path)
     # if it is the best model, min validation loss
     if is_best:
-        best_fpath = best_model_path
-        # copy that checkpoint file to the best path given, best_model_path
-        shutil.copyfile(f_path, best_fpath)
+        torch.save(state, best_model_path)  # Saves best checkpoint
+    else:
+        torch.save(state, checkpoint_path)  # Saves checkpoint
 
 
 def load_ckp(checkpoint_fpath, model, optimizer):
@@ -55,15 +51,18 @@ def load_ckp(checkpoint_fpath, model, optimizer):
     """
 
     # load checkpoint
-    checkpoint = torch.load(checkpoint_fpath)
+    checkpoint = torch.load(project_path(checkpoint_fpath))
     # initialize state_dict from checkpoint to model
     model.load_state_dict(checkpoint['state_dict'])
     # initialize optimizer from checkpoint to optimizer
     optimizer.load_state_dict(checkpoint['optimizer'])
     # initialize valid_loss_min from checkpoint to valid_loss_min
     val_loss_min = checkpoint['losses']['val']
+    solvent_test_loss_min = checkpoint['losses']['solvent']
+    solute_test_loss_min = checkpoint['losses']['solute']
     # return model, optimizer, epoch value, min validation loss
-    return model, optimizer, checkpoint['epoch'], val_loss_min.item()
+    return model, optimizer, checkpoint['epoch'], \
+           (val_loss_min.item(), solvent_test_loss_min.item(), solute_test_loss_min.item())
 
 
 def validate(model, loader):
@@ -96,7 +95,9 @@ def validate(model, loader):
 
 
 def train(model, train_loader, val_loader, solvent_test_loader, solute_test_loader,  loss_function, optimizer,
-          epochs=10, device='cpu', ckp_path='Run_1', every_n=5, val_loss_min_input=1e+16):
+          epochs=10, device='cpu', ckp_path='Run_1', every_n=5,
+          val_loss_min_input=1e+16, solute_test_loss_min_input=1e+16, solvent_test_loss_min_input=1e+16,
+          save_epochs=range(0, 100*1000, 1000), start_epoch=0):
     """
     Trains an NN model.
 
@@ -116,7 +117,7 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
         a function to be used ass loss
     optimizer: optimizer
         An optimizer we are going to train with
-    epochs: int
+    epochs: iterable
         number of epochs to train the model
     device: str
         A string representing the device to be trained on
@@ -126,25 +127,33 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
         How often to save a model checkpoint
     val_loss_min_input: float
         current minimal val loss value
+    save_epochs: iterable
+        epochs to save model on
+
     """
 
     # make sure val_loss_min is set to checkpoint value if model is loaded from checkpoint
     val_loss_min = val_loss_min_input
+    solute_test_loss_min = solute_test_loss_min_input
+    solvent_test_loss_min = solvent_test_loss_min_input
+
     run_folder = project_path('Solvation_1/Runs/' + ckp_path)
     # create a run folder and best subfolder if they do not exist
-    for folder in (run_folder, run_folder+'/best'):
+    for folder in ('', '/best'):
         try:
-            os.makedirs(folder)
+            os.makedirs(run_folder+folder)
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
 
     # Header row for losses log file
-    with open(run_folder + '/run_log.tsv', 'w+') as f:
-        f.write('\t'.join(str(x) for x in ('epoch', 'train', 'val', 'solvent', 'solute')) + '\n')
+    if not ckp_path:
+        with open(run_folder + '/run_log.tsv', 'w+') as f:
+            f.write('\t'.join(str(x) for x in ('epoch', 'train', 'val', 'solvent', 'solute')) + '\n')
+
 
     # loop through epochs
-    for epoch in range(epochs):
+    for epoch in range(start_epoch, epochs+start_epoch):
         # create hist_loss to calculate overall MSE
         hist_loss = 0
         for vector, G_true in train_loader:  # get batch
@@ -168,14 +177,19 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
         val_loss = validate(model, val_loader)
         solvent_test_loss = validate(model, solvent_test_loader)
         solute_test_loss = validate(model, solute_test_loader)
+        #
 
-        # write losses to log file
         with open(run_folder + '/run_log.tsv', 'a') as f:
             f.write('\t'.join(str(float(x)) for x in
                               (epoch, train_loss, val_loss, solvent_test_loss, solute_test_loss))+'\n')
 
         # check if epoch is needed to be saved. Parameter every_n is needed/
-        if not epoch % every_n:
+        if val_loss <= val_loss_min or solute_test_loss <= solute_test_loss_min or \
+                solvent_test_loss<=solvent_test_loss_min or epoch in save_epochs:
+            checkpoint_path = project_path('Solvation_1/Runs/' + ckp_path + '/ep_' + str(epoch) + '.pt')
+            best_val_model_path = project_path('Solvation_1/Runs/' + ckp_path + '/best/best_val_model.pt')
+            best_solute_model_path = project_path('Solvation_1/Runs/' + ckp_path + '/best/best_solute_model.pt')
+            best_solvent_model_path = project_path('Solvation_1/Runs/' + ckp_path + '/best/best_solvent_model.pt')
             # create checkpoint
             checkpoint = {
                 'epoch': epoch,
@@ -186,19 +200,25 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
                 'state_dict': model.state_dict(),
                 'optimizer': optimizer.state_dict(),
             }
-            # save checkpoint
-            checkpoint_path = project_path('Solvation_1/Runs/' + ckp_path + '/ep_' + str(epoch) + '.pt')
-            best_model_path = project_path('Solvation_1/Runs/' + ckp_path + '/best/ep_' + str(epoch) + '_best.pt')
-            save_ckp(checkpoint, False, checkpoint_path, best_model_path)
-
-            if val_loss <= val_loss_min:
+            if val_loss <= val_loss_min:  # if loss decreased
                 print(f'epoch {epoch}: val loss ({val_loss_min} -> {val_loss}). Saving model')
                 # save checkpoint as best model
-                save_ckp(checkpoint, True, checkpoint_path, best_model_path)
+                save_ckp(checkpoint, True, checkpoint_path, best_val_model_path)
                 val_loss_min = val_loss
-            else:
+            if solvent_test_loss <= solvent_test_loss_min:  # if loss decreased
+                print(f'epoch {epoch}: solvent loss ({solvent_test_loss_min} -> {solvent_test_loss}). Saving model')
+                # save checkpoint as best model
+                save_ckp(checkpoint, True, checkpoint_path, best_solvent_model_path)
+                solvent_test_loss_min = solvent_test_loss
+            if solute_test_loss <= solute_test_loss_min:  # if loss decreased
+                print(f'epoch {epoch}: solute loss ({solute_test_loss_min} -> {solute_test_loss}). Saving model')
+                # save checkpoint as best model
+                save_ckp(checkpoint, True, checkpoint_path, best_solute_model_path)
+                solute_test_loss_min = solute_test_loss
+            if epoch in save_epochs:  # if epoch in save epochs
+                save_ckp(checkpoint, False, checkpoint_path, best_val_model_path)  # save checkpoint
                 print(f'epoch {epoch}: val loss ({val_loss_min} -> {val_loss})')
-            # print(f'epoch {epoch}: val loss {val_loss}')
+                # print(f'epoch {epoch}: val loss {val_loss}')
     shutil.copyfile(run_folder + '/run_log.tsv', project_path('Solvation_1/Run_results/'+ckp_path+'/run_log.tsv'))
 
     return val_loss_min
@@ -221,8 +241,8 @@ def beautiful_sample(model, solvent, solute, normalize=(True, True, True)):
         A tuple of three bools showing if normalization is required for solvent, solute and G_solv respectively
     """
 
-    solvent_smiles = get_smiles(solvent)     # get solvent SMILES
-    solute_smiles = get_smiles(solute)  # get solute SMILES
+    solvent_smiles = get_smiles()[solvent]     # get solvent SMILES
+    solute_smiles = get_smiles()[solute] # get solute SMILES
     solvent_mol = Chem.MolFromSmiles(solvent_smiles)    # create solvent molecule instance
     solute_mol = Chem.MolFromSmiles(solute_smiles)  # create solute molecule instance
     print(f'solvent {solvent}')
@@ -247,7 +267,7 @@ def beautiful_sample(model, solvent, solute, normalize=(True, True, True)):
             print(f'predicted {(G_pred*std+mean).squeeze()}, true {(G_true*std+mean).squeeze()}')
 
 
-def plot_losses(file_path):
+def plot_losses(file_path, save=False):
     """
     Plots losses from losses log file.
 
@@ -281,5 +301,6 @@ def plot_losses(file_path):
         else:
             # if epoch column - make it integer
             losses_dict[column] = list(int(x) for x in losses_dict[column])
-    plt.savefig(file_path.rsplit('/', maxsplit=1)[0] + '/losses_plot.png')
+    if save:
+        plt.savefig(file_path.rsplit('/', maxsplit=1)[0] + '/losses_plot.png')
     plt.show()

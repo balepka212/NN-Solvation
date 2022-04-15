@@ -3,7 +3,7 @@ import pickle as pkl
 
 
 def create_smiles_dict(solvent_table='Solvation_1/Tables/Reserve/SMILES_solvents_all.txt',
-                       solute_table='Solvation_1/Tables/Reserve/SMILES_solutes_all_2.txt'):
+                       solute_table='Solvation_1/Tables/Reserve/SMILES_solutes_all_3.tsv'):
     """TODO description
      create dictionary from tables of i, compound, smiles
      solvent_table: table with solvents
@@ -15,8 +15,10 @@ def create_smiles_dict(solvent_table='Solvation_1/Tables/Reserve/SMILES_solvents
             for line in f:
                 i, compound, smiles = line.split('\t')
                 smiles = smiles.strip()
-                # print(i, compound, smiles)
-                smiles_dict[compound.replace(' ', '')] = smiles
+                print(i, compound.strip('"'), smiles)
+                # print(compound)
+
+                smiles_dict[compound.strip('"').replace(' ', '')] = smiles
 
     make_dict(solvent_table)
     make_dict(solute_table)

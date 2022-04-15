@@ -444,4 +444,6 @@
 443	6-chlorouracil	ClC1=CC(=O)NC(=O)N1
 444	3-iodopropene	ICC=C
 445	trimethylorthotrifluoroacetate	COC(OC)(OC)C(F)(F)F
-446	isopropyltoluene	c1cc(ccc1C(C)C)C
+446 isopropyltoluene    c1cc(ccc1C(C)C)C
+447 acetanilide O=C(Nc1ccccc1)C
+448 isopropylmethylphosphonofluoridate  CC(C)OP(=O)(C)F

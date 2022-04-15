@@ -95,6 +95,7 @@ class SS_Dataset(Dataset):
             'test_sp': {'func': test_sp, 'formats': [], 'paths': [], 'params': None},
             'test_up': {'func': test_up, 'formats': [], 'paths': [], 'params': None},
             'Morgan_fp_2_124': {'func': morgan_fingerprints, 'formats': [], 'paths': [], 'params': [2, 124, False]},
+            'bag_of_bonds': {'func': bag_of_bonds, 'formats': [], 'paths': [], 'params': None},
         }
 
         self.table = ss_table

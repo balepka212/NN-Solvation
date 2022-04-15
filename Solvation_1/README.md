@@ -39,18 +39,45 @@ calculated morgan fingerprints (putlink)
 # Table with Solvent-Solute Experiment links
 ## Linear
 
-|Solvent➡️ <br/>⬇️Solute|Macro| Morgan                                               |other|
-|----|-----|------------------------------------------------------|-----|
-|TESA|[Macro TESA](Run_results/Macro_TESA_Lin1)| [Morgan TESA](Run_results/Morgan_2_124_TESA_Lin1)    |     |
-|Classification|     |                                                      |     |
-|Morgan|[Macro Morgan](Run_results/Macro_Morgan_2_124_Lin1) | [Morgan Morgan](Run_results/Macro_Morgan_2_124_Lin1) |     |
+| Solvent➡️ <br/>⬇️Solute | Macro                                               | Morgan                                                | BoB                                             | BAT  | SOAP | SLATM |
+|-------------------------|-----------------------------------------------------|-------------------------------------------------------|-------------------------------------------------|------|------|-------|
+| TESA                    | [Macro TESA](Run_results/Macro_TESA_Lin1)           | [Morgan TESA](Run_results/Morgan_2_124_TESA_Lin1)     | [BoB TESA](Run_results/BoB_TESA_Lin1)           |      |      |       |
+| Classification          |                                                     |                                                       |                                                 |      |      |       |
+| Morgan                  | [Macro Morgan](Run_results/Macro_Morgan_2_124_Lin1) | [Morgan Morgan](Run_results/Macro_Morgan_2_124_Lin1b) | [BoB Morgan](Run_results/BoB_Morgan_2_124_Lin1) |      |      |       |
+| BoB                     | [Macro BoB](Run_results/Macro_BoB_Lin1)             | [Morgan BoB](Run_results/Macro_BoB_Lin2)              | [BoB BoB](Run_results/BoB_BoB_Lin2)             |      |      |       |
+| BAT                     |                                                     |                                                       |                                                 |      |      |       |
+| SOAP                    |                                                     |                                                       |                                                 |      |      |       |
+| SLATM                   |                                                     |                                                       |                                                 |      |      |       |
 
 ## ResNET
 
-|Solvent➡️ <br/>⬇️Solute| Macro                                               | Morgan                                               |other|
-|----|-----------------------------------------------------|------------------------------------------------------|-----|
-|TESA| [Macro TESA](Run_results/Macro_TESA_Res1)           | [Morgan TESA](Run_results/Morgan_2_124_TESA_Res1)    |     |
-|Classification|                                                     |                                                      |     |
-|Morgan| [Macro Morgan](Run_results/Macro_Morgan_2_124_Res1) | [Morgan Morgan](Run_results/Macro_Morgan_2_124_Res1) |     |
+| Solvent➡️ <br/>⬇️Solute | Macro                                               | Morgan                                               | BoB                                             | BAT  | SOAP | SLATM |
+|-------------------------|-----------------------------------------------------|------------------------------------------------------|-------------------------------------------------|------|------|-------|
+| TESA                    | [Macro TESA](Run_results/Macro_TESA_Res3)           | [Morgan TESA](Run_results/Morgan_2_124_TESA_Res1)    | [BoB TESA](Run_results/BoB_TESA_Res2)           |      |      |       |
+| Classification          |                                                     |                                                      |                                                 |      |      |       |
+| Morgan                  | [Macro Morgan](Run_results/Macro_Morgan_2_124_Res1) | [Morgan Morgan](Run_results/Macro_Morgan_2_124_Res1) | [BoB Morgan](Run_results/BoB_Morgan_2_124_Res2) |      |      |       |
+| BoB                     | [Macro BoB](Run_results/Macro_BoB_Res1)             | [Morgan BoB](Run_results/Macro_BoB_Res2)             | [BoB BoB](Run_results/BoB_BoB_Res2)             |      |      |       |
+| BAT                     |                                                     |                                                      |                                                 |      |      |       |
+| SOAP                    |                                                     |                                                      |                                                 |      |      |       |
+| SLATM                   |                                                     |                                                      |                                                 |      |      |       |
+
+
+# Vectorizers
+### Morgan
+Morgan molecule fingerprints.
+pip install rdkit-pypi
+
+### Macro Props
+Macroscopic parameters of solvent.
+
+### TESA
+Total Exposed Surface Area.
+
+### BoB
+Bag of Bonds.
+scipy install problems solved here:
+https://stackoverflow.com/a/69710042/13835675
+
+
 
 # The End
