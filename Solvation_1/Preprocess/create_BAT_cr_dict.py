@@ -1,54 +1,22 @@
-# from collections import OrderedDict
-#
-# from tqdm import tqdm
-#
-# from Solvation_1.config import project_path
-# import chemreps
-# import pickle as pkl
-# from Solvation_1.Vectorizers.vectorizers import get_sdf_file
-# import torch
-# from rdkit import Chem
-#
-#
-# with open(project_path('Solvation_1/Tables/Solvents_Solutes.pkl'), 'rb') as f:
-#     Solvents, Solutes = pkl.load(f)
-#
-# with open('/Users/balepka/PycharmProjects/msuAI/Solvation_1/Tables/MNSol_bags4.pkl', 'rb') as f:
-#     my_bags = pkl.load(f)
-#
-# JB_bags, JB_sizes = my_bags[2].copy()
-#
-# JB_data = {}
-# for compound in Solvents+Solutes:
-#     print(compound)
-#     mol_path = get_sdf_file(compound)
-#     JB_array = chemreps.just_bonds.bonds(project_path(mol_path), JB_bags, JB_sizes)
-#     out = torch.tensor(JB_array)
-#     JB_data[compound] = out
-#
-# with open('/Users/balepka/PycharmProjects/msuAI/Solvation_1/Tables/just_bonds_dict.pkl', 'wb') as f:
-#     pkl.dump(JB_data, f)
-#
 import torch
 from chemreps.bagger import BagMaker
-from chemreps.just_bonds import bonds
-
+from chemreps.bat import bat
 from Solvation_1.Vectorizers.vectorizers import get_sdf_file
 from Solvation_1.config import project_path
 import pickle as pkl
 
 dataset = project_path('Solvation_1/Tables/Reserve/Sdf')
-bagger = BagMaker('JustBonds', dataset)
+bagger = BagMaker('BAT', dataset)
 
 with open(project_path('Solvation_1/Tables/Solvents_Solutes.pkl'), 'rb') as f:
     Solvents, Solutes = pkl.load(f)
 
-JB_data = {}
+BAT_data = {}
 for compound in Solvents+Solutes:
     mol_path = get_sdf_file(compound)
-    JB_array = bonds(project_path(mol_path), bagger.bags, bagger.bag_sizes)
-    out = torch.tensor(JB_array)
-    JB_data[compound] = out
+    BAT_array = bat(project_path(mol_path), bagger.bags, bagger.bag_sizes)
+    out = torch.tensor(BAT_array)
+    BAT_data[compound] = out
 
-with open('/Users/balepka/PycharmProjects/msuAI/Solvation_1/Tables/just_bonds_dict.pkl', 'wb') as f:
-    pkl.dump(JB_data, f)
+with open('/Users/balepka/PycharmProjects/msuAI/Solvation_1/Tables/BAT_cr_dict.pkl', 'wb') as f:
+    pkl.dump(BAT_data, f)

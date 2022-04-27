@@ -88,19 +88,37 @@ class SS_Dataset(Dataset):
                  full_data='Solvation_1/Tables/Entire_table3.tsv', show_norm_params=True):
         # A dict for vectorizers necessary data
         self.vectorizers_map = {
-            'solvent_macro_props1': {'func': solvent_macro_props1, 'formats': ['tsv'],
-                                     'paths': ['Solvation_1/Tables/Solvent_properties3.tsv'], 'params': None},
-            'solute_TESA': {'func': solute_TESA, 'formats': ['feather'],
-                            'paths': ['Solvation_1/Tables/df3_3'], 'params': None},
-            'test_sp': {'func': test_sp, 'formats': [], 'paths': [], 'params': None},
-            'test_up': {'func': test_up, 'formats': [], 'paths': [], 'params': None},
-            'Morgan_fp_2_124': {'func': morgan_fingerprints, 'formats': [], 'paths': [], 'params': [2, 124, False]},
-            'bag_of_bonds': {'func': bag_of_bonds, 'formats': [], 'paths': [], 'params': None},
+            'blank': 'blank',
+            'solvent_macro_props1': 'macro',
+            'solute_TESA': 'tesa',
+            'classification': 'classification',
+            'test_sp': 'testsp',
+            'test_up': 'testup',
+            'Morgan_fp_2_124': 'morgan2124',
+            'bag_of_bonds': 'bob',
+            'BAT': 'bat',
+            'just_bonds':'justbonds',
+            'slatm':'slatm',
+            'soap':'soap',
+
         }
+        # self.vectorizers_map = {
+        #     'solvent_macro_props1': {'func': solvent_macro_props1, 'formats': ['tsv'],
+        #                              'paths': ['Solvation_1/Tables/Solvent_properties3.tsv'], 'params': None},
+        #     'solute_TESA': {'func': solute_TESA, 'formats': ['feather'],
+        #                     'paths': ['Solvation_1/Tables/df3_3'], 'params': None},
+        #     'classification': {'func': classification, 'formats': [],
+        #                        'paths': [], 'params': None},
+        #     'test_sp': {'func': test_sp, 'formats': [], 'paths': [], 'params': None},
+        #     'test_up': {'func': test_up, 'formats': [], 'paths': [], 'params': None},
+        #     'Morgan_fp_2_124': {'func': morgan_fingerprints, 'formats': [], 'paths': [], 'params': [2, 124, False]},
+        #     'bag_of_bonds': {'func': bag_of_bonds, 'formats': [], 'paths': [], 'params': None},
+        #     'BAT': {'func': BAT, 'formats': [], 'paths': [], 'params': None},
+        # }
 
         self.table = ss_table
-        self.solvent_vect = solvent_vect
-        self.solute_vect = solute_vect
+        self.solvent_vect = self.vectorizers_map[solvent_vect]
+        self.solute_vect = self.vectorizers_map[solute_vect]
         self.data = []
 
         # Set a column with Solutes as index column
@@ -113,19 +131,19 @@ class SS_Dataset(Dataset):
                 if not pd.isna(G_solv):
                     self.data.append((solvent, solute, G_solv))
 
-        # Preparing vectorizers parameters
-        self.solvent_func = self.vectorizers_map[self.solvent_vect]['func']
-        self.solute_func = self.vectorizers_map[self.solute_vect]['func']
-        self.solvent_args = []
-        self.solute_args = []
-        for form, path in zip(self.vectorizers_map[self.solvent_vect]['formats'],
-                              self.vectorizers_map[self.solvent_vect]['paths']):
-            self.solvent_args.append(read_format(form)(project_path(path)))
-        for form, path in zip(self.vectorizers_map[self.solute_vect]['formats'],
-                              self.vectorizers_map[self.solute_vect]['paths']):
-            self.solute_args.append(read_format(form)(project_path(path)))
-        self.solvent_params = self.vectorizers_map[self.solvent_vect]['params']
-        self.solute_params = self.vectorizers_map[self.solute_vect]['params']
+        # # Preparing vectorizers parameters
+        # self.solvent_func = self.vectorizers_map[self.solvent_vect]['func']
+        # self.solute_func = self.vectorizers_map[self.solute_vect]['func']
+        # self.solvent_args = []
+        # self.solute_args = []
+        # for form, path in zip(self.vectorizers_map[self.solvent_vect]['formats'],
+        #                       self.vectorizers_map[self.solvent_vect]['paths']):
+        #     self.solvent_args.append(read_format(form)(project_path(path)))
+        # for form, path in zip(self.vectorizers_map[self.solute_vect]['formats'],
+        #                       self.vectorizers_map[self.solute_vect]['paths']):
+        #     self.solute_args.append(read_format(form)(project_path(path)))
+        # self.solvent_params = self.vectorizers_map[self.solvent_vect]['params']
+        # self.solute_params = self.vectorizers_map[self.solute_vect]['params']
 
         # Check if any normalization is needed
         self.normalize = normalize
@@ -150,8 +168,8 @@ class SS_Dataset(Dataset):
             # Create X and y tensors
             for i in range(len(norm_data)):
                 solvent, solute, G_solv = norm_data[i]
-                X1 = self.solvent_func(solvent, self.solvent_args, self.solvent_params)
-                X2 = self.solute_func(solute, self.solute_args, self.solute_params)
+                X1 = get_sample(solvent, self.solvent_vect)
+                X2 = get_sample(solute, self.solute_vect)
                 y = torch.tensor(G_solv)
 
                 # Create initial tensors
@@ -187,8 +205,8 @@ class SS_Dataset(Dataset):
     def __getitem__(self, i):
         solvent, solute, G_solv = self.data[i]
         # Create X and y tensors
-        X1 = self.solvent_func(solvent, self.solvent_args, self.solvent_params)
-        X2 = self.solute_func(solute, self.solute_args, self.solute_params)
+        X1 = get_sample(solvent, self.solvent_vect)
+        X2 = get_sample(solute, self.solute_vect)
 
         # Apply normalization if required
         G_n, solvent_n, solute_n = self.normalize

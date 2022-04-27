@@ -1,7 +1,7 @@
 from Solvation_1.my_nets.Experiment import Experiment
 
 kwargs = {
-        'runs_folder': 'BoB_Morgan_2_124_Res2',
+        'runs_folder': 'BoB_Morgan_2_124_Res22',
         'net': 'Res',
         'lr': 1e-5,
         'solvent_vectorizer': 'bag_of_bonds',

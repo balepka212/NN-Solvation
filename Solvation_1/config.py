@@ -3,7 +3,7 @@ import pandas as pd
 from pyarrow import feather
 
 
-def project_path(path):
+def project_path(path: str) -> str:
     """
     Returns a full path from a directory path
 
@@ -12,9 +12,11 @@ def project_path(path):
     path: str
         Path of file in the project (starts with 'Solvation_1/')
     """
-    project = os.path.dirname(os.path.abspath(__file__))
-    final_path = project + '/../' + path
-    # print(final_path)
+    project = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # final_path = project + '/../' + path
+
+    path_split = path.split('/')
+    final_path = os.path.join(project, *path_split)
     return final_path
 
 

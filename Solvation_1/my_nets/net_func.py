@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from rdkit import Chem
-from Solvation_1.Vectorizers.vectorizers import get_smiles
+from Solvation_1.Vectorizers.vectorizers import get_dictionary
 from Solvation_1.my_nets.Create_dataset import SS_Dataset
 from torch.utils.data import DataLoader
 from Solvation_1.config import *
@@ -97,7 +97,7 @@ def validate(model, loader):
 def train(model, train_loader, val_loader, solvent_test_loader, solute_test_loader,  loss_function, optimizer,
           epochs=10, device='cpu', ckp_path='Run_1', every_n=5,
           val_loss_min_input=1e+16, solute_test_loss_min_input=1e+16, solvent_test_loss_min_input=1e+16,
-          save_epochs=range(0, 100*1000, 1000), start_epoch=0):
+          save_epochs=range(0, 100*1000, 1000), start_epoch=0, from_start=True):
     """
     Trains an NN model.
 
@@ -147,7 +147,7 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
                 raise
 
     # Header row for losses log file
-    if not ckp_path:
+    if from_start:
         with open(run_folder + '/run_log.tsv', 'w+') as f:
             f.write('\t'.join(str(x) for x in ('epoch', 'train', 'val', 'solvent', 'solute')) + '\n')
 
@@ -241,8 +241,8 @@ def beautiful_sample(model, solvent, solute, normalize=(True, True, True)):
         A tuple of three bools showing if normalization is required for solvent, solute and G_solv respectively
     """
 
-    solvent_smiles = get_smiles()[solvent]     # get solvent SMILES
-    solute_smiles = get_smiles()[solute] # get solute SMILES
+    solvent_smiles = get_dictionary('smiles')[solvent]     # get solvent SMILES
+    solute_smiles = get_dictionary('smiles')[solute] # get solute SMILES
     solvent_mol = Chem.MolFromSmiles(solvent_smiles)    # create solvent molecule instance
     solute_mol = Chem.MolFromSmiles(solute_smiles)  # create solute molecule instance
     print(f'solvent {solvent}')

@@ -1,0 +1,6 @@
+solute: blank
+     solute: solute_TESA
+     norm: (True, True, True)
+     learning rate: 1e-05
+     Net_Dict: None
+     epochs: 20000

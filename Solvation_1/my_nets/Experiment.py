@@ -107,7 +107,7 @@ def Experiment(runs_folder='Example_Lin1',
     print('Training')
     MSE = train(model, train_loader, val_loader, solvent_test_loader, solute_test_loader, loss_function,
                 optimizer, epochs=epochs, save_epochs=save_epochs, ckp_path=runs_folder,
-                start_epoch=start_epoch, val_loss_min_input=val_loss_min_input)
+                start_epoch=start_epoch, val_loss_min_input=val_loss_min_input, from_start=True)
     print('Finished training!')
     plot_losses(project_path('Solvation_1/Run_results/' + runs_folder + '/run_log.tsv'), save=True)
     return MSE
@@ -187,6 +187,13 @@ def Continue_experiment(runs_folder='Example_Lin1',
     print(f'solute test length: {len(solute_test_loader.dataset)}')
     print(f'solvent test length: {len(solvent_test_loader.dataset)}\n')
 
+    for folder in ('Solvation_1/Runs/', 'Solvation_1/Run_results/'):
+        try:
+            os.makedirs(project_path(folder + runs_folder))
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
     try:
         os.makedirs(project_path('Solvation_1/Runs/' + runs_folder + '/run_log_hist'))
     except OSError as e:
@@ -255,7 +262,8 @@ def Continue_experiment(runs_folder='Example_Lin1',
                 optimizer, epochs=epochs, ckp_path=runs_folder, start_epoch=start_epoch,
                 val_loss_min_input=val_loss_min_input,
                 solvent_test_loss_min_input=solvent_loss_min_input,
-                solute_test_loss_min_input=solute_loss_min_input)
+                solute_test_loss_min_input=solute_loss_min_input,
+                from_start=False)
     print('Finished training!')
 
     plot_losses(project_path('Solvation_1/Run_results/' + runs_folder + '/run_log.tsv'), save=True)
