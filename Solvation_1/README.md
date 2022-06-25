@@ -24,9 +24,9 @@ are presented in following [Jupyter Notebook](Examples/Foreign_Datasets_Feature_
 ### [config.py](config.py)
 A file with some useful function used along all the project.
 ### [Training_files](Training_files)
-A folder with .py files each of which trains the network with some parameters. All KRR training is in 000_Consequent_KRR.py.
-### [Jupyter_examples](Jupyter_examples)
-A folder with .ipynb files that dublicate training files.
+A folder with .py files each of which trains the network with some parameters. All KRR training is in
+[one file](Training_files/000_Consequent_KRR.py).
+
 ### [my_nets](my_nets)
 A package with some .py files to create and train networks
 
@@ -36,9 +36,8 @@ A package with some .py files to create and train networks
 
 &nbsp; &nbsp; [LinearNet](my_nets/LinearNet.py) - A file that contains Linear Network used for training
 
-
 &nbsp; &nbsp; [ResNET](my_nets/ResNET.py)- A file that contains 1D ResNET used for training. The model is adopted from
-https://github.com/hsd1503/resnet1d/blob/master/util.py
+[hsd1503](https://github.com/hsd1503/resnet1d/blob/master/util.py)
 ### [Vectorizers](Vectorizers)
 A package vectorizers.py that contains vectorizers functions used in this project
 ### [Tables](Tables)
@@ -46,32 +45,26 @@ A folder with tables used for various functions and vectorizers
 ### [Preprocess](Preprocess)
 A folder with some files used to prepare data (tables, dicts, ...)
 
-# Vectorizers
-## Blank
+## Vectorizers
+### Blank
 zero tensor with length one to train models without any information either on solvent or solute.
 
-## Classification
+### Classification
 Three layer classification, described in [MNSol Database](https://comp.chem.umn.edu/mnsol/). 
 
-## Solute_TESA
+### Solute_TESA
 taken from MNSol database calculated parameter of Total Exposed Surface Area. More info in
 [MNSol Database](https://comp.chem.umn.edu/mnsol/). 
 
-## Solvent_Macro_props
+### Solvent_Macro_props
 properties of solvent: nD, alpha, beta, gamma, epsilon, phi, psi. Sometimes called Abraham descriptors.
 
-## MorganFingerprints
-calculated morgan fingerprints, described 
+### MorganFingerprints
+calculated morgan fingerprints bit vector, described 
 [here](https://towardsdatascience.com/a-practical-introduction-to-the-use-of-molecular-fingerprints-in-drug-discovery-7f15021be2b1)
 
 If troubles with installation try
 >pip install rdkit-pypi
-
-### Macro Props
-Macroscopic parameters of solvent.
-
-### TESA
-Total Exposed Surface Area.
 
 ### BoB
 Bag of Bonds.
@@ -79,6 +72,14 @@ Bag of Bonds.
 scipy install problems solved here:
 https://stackoverflow.com/a/69710042/13835675
 
+### JustBonds (JB)
+Bag of Bonds for bonded atoms only
+
+### BAT
+Bag of Bonds with addition of Angles and Torsion angles between bonded atoms
+
+### SOAP
+Smooth Overlap of Atomic Positions, thoroughly described [here](https://doi.org/10.1103/PhysRevB.87.184115)
 
 # Table with Solvent-Solute Experiment links
 ## Kernel Ridge Regression
