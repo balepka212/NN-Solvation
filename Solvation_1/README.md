@@ -6,7 +6,9 @@ The data is obtained from [MNSol Database](https://comp.chem.umn.edu/mnsol/).
 #### To MSU AI
 Please read the following [file](To_MSU_AI.md) for reproducibility, models availability and other comments 
 ## Training
-The training data is written to Runs folder and the results are stored in Run_results including losses plot, normalization parameters, run_log and comments. The links to each result folder are presented [below](#table-with-solvent-solute-experiment-links)
+The training data is written to Runs folder and the results are stored in Run_results including losses plot, 
+normalization parameters, run_log and comments. The links to each result folder are presented
+[below](#table-with-solvent-solute-experiment-links)
 
 #### Neural Networks
 All training files are presented in [Training_files](Training_files) in the format Solvent_Solute_NN.
@@ -14,7 +16,9 @@ All training files are presented in [Training_files](Training_files) in the form
 [KRR_training](Training_files/000_Consequent_KRR.py) - all KRR experiments are sequentially carried out in this file
 
 ## Other experiments
-Experiments on another datasets ([Acree](https://doi.org/10.6084/m9.figshare.1572326.v1) and [FreeSolv](https://doi.org/10.1007/s10822-014-9747-x)), G<sub>solv</sub> distribution and feature permutation importance are presented in following [Jupyter Notebook](Examples/Foreign_Datasets_Feature_Permutations.ipynb).
+Experiments on another datasets ([Acree](https://doi.org/10.6084/m9.figshare.1572326.v1) and
+[FreeSolv](https://doi.org/10.1007/s10822-014-9747-x)), G<sub>solv</sub> distribution and feature permutation importance
+are presented in following [Jupyter Notebook](Examples/Foreign_Datasets_Feature_Permutations.ipynb).
 
 # Repository structure
 ### [config.py](config.py)
@@ -42,19 +46,26 @@ A folder with tables used for various functions and vectorizers
 ### [Preprocess](Preprocess)
 A folder with some files used to prepare data (tables, dicts, ...)
 
-# Vectorizers info
-## Solute_TESA
-taken from MNSol database calculated parameter of Total Exposed Surface Area. More info (putlink)
-## Solvent_Macro_props
-properties of solvent: nD, alpha, beta, gamma, epsilon, phi, psi.
-## MorganFingerprints
-calculated morgan fingerprints (putlink)
-pip install rdkit-pypi
-
-
 # Vectorizers
-### Morgan
-Morgan molecule fingerprints.
+## Blank
+zero tensor with length one to train models without any information either on solvent or solute.
+
+## Classification
+Three layer classification, described in [MNSol Database](https://comp.chem.umn.edu/mnsol/). 
+
+## Solute_TESA
+taken from MNSol database calculated parameter of Total Exposed Surface Area. More info in
+[MNSol Database](https://comp.chem.umn.edu/mnsol/). 
+
+## Solvent_Macro_props
+properties of solvent: nD, alpha, beta, gamma, epsilon, phi, psi. Sometimes called Abraham descriptors.
+
+## MorganFingerprints
+calculated morgan fingerprints, described 
+[here](https://towardsdatascience.com/a-practical-introduction-to-the-use-of-molecular-fingerprints-in-drug-discovery-7f15021be2b1)
+
+If troubles with installation try
+>pip install rdkit-pypi
 
 ### Macro Props
 Macroscopic parameters of solvent.
@@ -64,6 +75,7 @@ Total Exposed Surface Area.
 
 ### BoB
 Bag of Bonds.
+
 scipy install problems solved here:
 https://stackoverflow.com/a/69710042/13835675
 
