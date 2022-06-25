@@ -1,6 +1,0 @@
-solute: bag_of_bonds
-     solute: classification
-     norm: (True, True, True)
-     learning rate: 1e-05
-     Net_Dict: {'base_filters': 2, 'kernel_size': 3, 'stride': 2, 'groups': 1, 'n_block': 3, 'n_classes': 1, 'use_bn': True, 'use_do': True, 'verbose': False}
-     epochs: 20000
