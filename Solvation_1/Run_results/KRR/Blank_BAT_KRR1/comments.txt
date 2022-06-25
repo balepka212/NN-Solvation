@@ -1,0 +1,5 @@
+solute: blank
+                    solute: bat
+                    norm: (True, True, True)
+                    kernels:  linear, polynomial_2, polynomial_3, rbf, laplacian
+                

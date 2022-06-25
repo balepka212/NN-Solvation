@@ -1,0 +1,6 @@
+solute: Morgan_fp_2_124
+     solute: Morgan_fp_2_124
+     norm: (True, True, True)
+     learning rate: 1e-05
+     Net_Dict: None
+     epochs: 10000
