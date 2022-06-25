@@ -3,6 +3,7 @@ In this project we compare a number of molecular representations(vectorizers)
 to determine what is the most suitable way to represent a molecule as vector when intermolecular interactions 
 are at most interest. In this study we use solvation energy as a target value and solvent and solute molecules as input.
 The data is obtained from [MNSol Database](https://comp.chem.umn.edu/mnsol/). 
+#### To MSU AI
 
 ## Training
 The training data is written to Runs folder and the results are stored in Run_results including losses plot, normalization parameters, run_log and comments. The links to each result folder are presented [below](#table-with-solvent-solute-experiment-links)
