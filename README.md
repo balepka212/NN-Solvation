@@ -6,7 +6,9 @@ The data is obtained from [MNSol Database](https://comp.chem.umn.edu/mnsol/).
 #### [To MSU AI](To_MSU_AI.md)
 Please read the following [file](To_MSU_AI.md) for reproducibility, models availability and other comments 
 ## Training
-The training data is written to Runs folder and the results are stored in Run_results including losses plot, 
+The training data is written to Runs folder and the results are stored in Run_results
+(due to large file sizes Run_results is available for manual download from 
+[Yandex Disk](https://disk.yandex.com/d/BOYJ-teQx19u0Q)) including losses plot, 
 normalization parameters, run_log and comments. The links to each result folder are presented
 [below](#table-with-solvent-solute-experiment-links)
 
@@ -24,7 +26,7 @@ import torch
 in_feat = 207  # specify length 
 model = LinearNet3(in_features=in_feat)
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
-best_model, *other = load_ckp('Run_Results/Class_Morgan_Lin1/best/best_val_model.pt', model, optimizer)
+best_model, *other = load_ckp('Examples/data/best_Class_Morgan_Lin1', model, optimizer)
 ```
 
 ```
