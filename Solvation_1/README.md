@@ -12,8 +12,48 @@ normalization parameters, run_log and comments. The links to each result folder 
 
 #### Neural Networks
 All training files are presented in [Training_files](Training_files) in the format Solvent_Solute_NN.
+Examples of getting best val models for LinNet and ResNet are below
+
+```
+# LinNet
+
+from my_nets.LinearNet import LinearNet3
+from my_nets.net_func import load_ckp
+import torch
+
+in_feat = 207  # specify length 
+model = LinearNet3(in_features=in_feat)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+best_model, *other = load_ckp('Solvation_1/Run_Results/Class_Morgan_Lin1/best/best_val_model.pt', model, optimizer)
+```
+
+```
+# ResNet
+
+from my_nets.ResNET import ResNet1D
+from my_nets.net_func import load_ckp
+import torch
+
+Res_Dict = {'base_filters':2, 'kernel_size':3, 'stride':2, 'groups':1, 'n_block':3, 'n_classes':1, 'use_bn':True, 'use_do':True, 'verbose':False}
+model = ResNet1D(in_channels=1, **Res_Dict)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+best_model, *other = load_ckp('Solvation_1/Run_Results/ResNet/Class_Morgan_2_124_Res1/best/best_val_model.pt', model, optimizer)
+```
+
 #### Kernel Ridge Regression
-[KRR_training](Training_files/000_Consequent_KRR.py) - all KRR experiments are sequentially carried out in this file
+[KRR_training](Training_files/000_Consequent_KRR.py) - all KRR experiments are sequentially carried out in this file. 
+The results are available at 
+[Google Drive](https://drive.google.com/drive/folders/1SSmV2efZHku2CqQUVswASER0lo6xiW7Z?usp=sharing).
+
+```
+# KRR
+
+import pickle as pkl
+
+with open(project_path('/Solvation_1/Run_results/KRR/Class_Morgan_KRR1/best_models.pkl'), 'rb') as f:
+    KRR_Class_Morgan_kernels = pkl.load(f)  # dictionary of kernel names and the models
+KRR_Class_Morgan = KRR_Class_Morgan_kernels['laplacian']
+```
 
 ## Other experiments
 Experiments on another datasets ([Acree](https://doi.org/10.6084/m9.figshare.1572326.v1) and
@@ -64,7 +104,8 @@ calculated morgan fingerprints bit vector, described
 [here](https://towardsdatascience.com/a-practical-introduction-to-the-use-of-molecular-fingerprints-in-drug-discovery-7f15021be2b1)
 
 If troubles with installation try
->pip install rdkit-pypi
+
+`pip install rdkit-pypi`
 
 ### BoB
 Bag of Bonds.
