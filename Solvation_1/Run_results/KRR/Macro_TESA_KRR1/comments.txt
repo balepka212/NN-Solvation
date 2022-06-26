@@ -1,5 +1,0 @@
-solute: macro
-                    solute: tesa
-                    norm: (True, True, True)
-                    kernels:  linear, polynomial_2, polynomial_3, rbf, laplacian
-                
