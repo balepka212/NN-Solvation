@@ -20,5 +20,7 @@ token.txt
 /Training_files/Example_Res2.py
 /Run_results/
 /Solvation_1/Run_results/
+Run_results/
+Solvation_1/Run_results/
 /solvatum-1.0.0.zip
 /Trainer/
