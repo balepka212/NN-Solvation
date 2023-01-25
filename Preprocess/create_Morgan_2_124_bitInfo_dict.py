@@ -9,34 +9,35 @@ from Vectorizers.vectorizers import get_dictionary
 from config import project_path
 
 
+with open(project_path('Tables/Solvents_Solutes.pkl'), 'rb') as f:
+    Solvents, Solutes = pkl.load(f)
 
 
-
-def create_tensor(compound, params, from_smiles=False):
+def create_tensor(compound, params):
     RDLogger.DisableLog('rdApp.*')  # disables WARNING of not removing H-atoms
     radius, nBits, chiral = params
-    if from_smiles:
-        smiles = compound
-    else:
-        smiles = get_dictionary('smiles')[compound]  # get compound SMILES notation
+    smiles = get_dictionary('smiles')[compound]  # get compound SMILES notation
     mol = Chem.MolFromSmiles(smiles)  # get compound molecule instance
-    fp = AllChem.GetMorganFingerprintAsBitVect(mol, useChirality=chiral, radius=radius, nBits=nBits)  # get fingerprints
+    bitInfo={}
+    fp = AllChem.GetMorganFingerprintAsBitVect(mol, useChirality=chiral, radius=radius, nBits=nBits, bitInfo=bitInfo)  # get fingerprints
     out = torch.tensor(fp, dtype=torch.float)
-    return out
+    return out, bitInfo
 
 
-if __name__ == '__main__':
 
-    with open(project_path('Tables/Solvents_Solutes.pkl'), 'rb') as f:
-        Solvents, Solutes = pkl.load(f)
 
-    df3 = feather.read_feather('/Users/balepka/PycharmProjects/msuAI/Tables/df3_3')
-    data_dict = {}
-    for compound in Solutes+Solvents:
-        data_dict[compound] = create_tensor(compound, (2, 124, False))
+df3 = feather.read_feather('/Users/balepka/PycharmProjects/msuAI/Tables/df3_3')
+data_dict = {}
+bitInfo_dict = {}
+for compound in Solutes+Solvents:
+    fp, bitInfo = create_tensor(compound, (2, 124, False))
+    data_dict[compound] = fp
+    bitInfo_dict[compound] = bitInfo
 
-    with open('/Users/balepka/PycharmProjects/msuAI/Tables/Morgan_2_124_dict.pkl', 'wb') as f:
-        pkl.dump(data_dict, f)
+with open('/Users/balepka/PycharmProjects/msuAI/Tables/Morgan_2_124_bitInfo_dict.pkl', 'wb') as f:
+    pkl.dump(data_dict, f)
+with open('/Users/balepka/PycharmProjects/msuAI/Tables/Only_fp_bitInfo_dict.pkl', 'wb') as f:
+    pkl.dump(bitInfo_dict, f)
 
 
 
