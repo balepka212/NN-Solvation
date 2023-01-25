@@ -1,10 +1,10 @@
 from my_nets.Experiment import Experiment
 
 kwargs = {
-        'runs_folder': 'Blank_Computed_Res1',
+        'runs_folder': 'Macro_Computed_Res1',
         'net': 'Res',
         'lr': 1e-5,
-        'solvent_vectorizer': 'blank',
+        'solvent_vectorizer': 'solvent_macro_props1',
         'solute_vectorizer': 'computedprops',
         'norm_bools': (True, True, True),
         'net_dict': {'base_filters': 2, 'kernel_size': 3, 'stride': 2, 'groups': 1, 'n_block': 3,
@@ -18,6 +18,7 @@ Experiment(**kwargs)
 # 'blank'
 # 'classification'
 # 'solute_TESA'
+# solvent_macro_props1
 # 'Morgan_fp_2_124'
 # 'Morgan_2_1048576'
 # 'just_bonds'

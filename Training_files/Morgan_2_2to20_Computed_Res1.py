@@ -1,10 +1,10 @@
 from my_nets.Experiment import Experiment
 
 kwargs = {
-        'runs_folder': 'Blank_Computed_Res1',
+        'runs_folder': 'Morgan_2_2to20_Computed_Res1',
         'net': 'Res',
         'lr': 1e-5,
-        'solvent_vectorizer': 'blank',
+        'solvent_vectorizer': 'Morgan_2_1048576',
         'solute_vectorizer': 'computedprops',
         'norm_bools': (True, True, True),
         'net_dict': {'base_filters': 2, 'kernel_size': 3, 'stride': 2, 'groups': 1, 'n_block': 3,

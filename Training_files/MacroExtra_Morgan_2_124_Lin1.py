@@ -1,11 +1,11 @@
 from my_nets.Experiment import Experiment
 
 kwargs = {
-        'runs_folder': 'MacroExtra_Blank_Lin1',
+        'runs_folder': 'MacroExtra_Morgan_2_124_Lin1',
         'net': 'Lin',
         'lr': 1e-5,
         'solvent_vectorizer': 'MacroExtra',
-        'solute_vectorizer': 'blank',
+        'solute_vectorizer': 'Morgan_fp_2_124',
         'norm_bools': (True, True, True),
         'net_dict': None,
         'epochs': 10000}
