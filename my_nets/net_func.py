@@ -151,7 +151,6 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
         with open(run_folder + '/run_log.tsv', 'w+') as f:
             f.write('\t'.join(str(x) for x in ('epoch', 'train', 'val', 'solvent', 'solute')) + '\n')
 
-
     # loop through epochs
     for epoch in range(start_epoch, epochs+start_epoch):
         # create hist_loss to calculate overall MSE
@@ -185,7 +184,7 @@ def train(model, train_loader, val_loader, solvent_test_loader, solute_test_load
 
         # check if epoch is needed to be saved. Parameter every_n is needed/
         if val_loss <= val_loss_min or solute_test_loss <= solute_test_loss_min or \
-                solvent_test_loss<=solvent_test_loss_min or epoch in save_epochs:
+                solvent_test_loss <= solvent_test_loss_min or epoch in save_epochs:
             checkpoint_path = project_path('Runs/' + ckp_path + '/ep_' + str(epoch) + '.pt')
             best_val_model_path = project_path('Runs/' + ckp_path + '/best/best_val_model.pt')
             best_solute_model_path = project_path('Runs/' + ckp_path + '/best/best_solute_model.pt')
@@ -245,7 +244,7 @@ def beautiful_sample(model, solvent, solute, normalize=(True, True, True)):
     """
 
     solvent_smiles = get_dictionary('smiles')[solvent]     # get solvent SMILES
-    solute_smiles = get_dictionary('smiles')[solute] # get solute SMILES
+    solute_smiles = get_dictionary('smiles')[solute]  # get solute SMILES
     solvent_mol = Chem.MolFromSmiles(solvent_smiles)    # create solvent molecule instance
     solute_mol = Chem.MolFromSmiles(solute_smiles)  # create solute molecule instance
     print(f'solvent {solvent}')
@@ -309,3 +308,43 @@ def plot_losses(file_path, save=False):
     if save:
         plt.savefig(file_path.rsplit('/', maxsplit=1)[0] + '/losses_plot.png')
     plt.show()
+
+
+
+def single_sample_loader(solvent, solute, S_vect, U_vect, normalize=(True, True, True), table=None, norm_params=None, nan_is_inf=False):  # NOQA:314
+    """
+    creates dataloader? of given solvent, solute with corresponding methods
+
+    Parameters
+    ----------
+    solvent: str
+        name of solvent
+    solute: str
+        name of solute
+    S_vect: str
+        solvent vectorizer
+    U_vect: str
+        solute vectorizer
+    normalize: (bool, bool, bool)
+    nan_is_inf: bool
+        whether to replace a nan with infinity
+        A tuple of three bools showing if normalization is required for solvent, solute and G_solv respectively
+    :returns: (dataloader, true G value)
+
+    """
+    if table is not None:
+        entire = pd.read_table(project_path('Tables/Entire_table3.tsv'))
+    else:
+        entire = table
+        # load table with all species
+    # Set a column with Solutes as index column
+    if entire.index.name != 'Unnamed: 0':
+        entire = entire.set_index('Unnamed: 0')
+    table_sample = entire[[solvent]].loc[[solute]]    # leave only cell with needed solvent and solute
+    if nan_is_inf:
+        table_sample[solvent][solute] = float('inf')
+    sample_ds = SS_Dataset(table_sample, S_vect, U_vect,
+                           normalize=normalize, show_norm_params=False, norm_params=norm_params)     # create sample dataset
+    sample_loader = DataLoader(sample_ds)   # create sample dataloader
+
+    return sample_loader

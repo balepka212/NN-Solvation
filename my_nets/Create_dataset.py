@@ -86,7 +86,7 @@ class SS_Dataset(Dataset):
             Prints the animals name and what sound it makes
         """
 
-    def __init__(self, ss_table, solvent_vect, solute_vect, normalize=(False, False, False),
+    def __init__(self, ss_table, solvent_vect, solute_vect, normalize=(False, False, False), norm_params=None,
                  full_data='Tables/Entire_table3.tsv', show_norm_params=True):
         # A dict for vectorizers necessary data
         self.vectorizers_map = {
@@ -97,10 +97,14 @@ class SS_Dataset(Dataset):
             'class':'classification',
             'solvent_macro_props1': 'macro',
             'macro': 'macro',
+            'macroextra': 'macroextra',
             'solute_TESA': 'tesa',
+            'computed':'computedprops',
             'tesa': 'tesa',
             'Morgan_fp_2_124': 'morgan2124',
             'morgan': 'morgan2124',
+            'morgan22to20': 'morgan21048576',
+            'morgan2to20': 'morgan21048576',
             'just_bonds':'justbonds',
             'jb':'justbonds',
             'bag_of_bonds': 'bob',
@@ -136,7 +140,7 @@ class SS_Dataset(Dataset):
         self.data = []
 
         # Set a column with Solutes as index column
-        if self.table.index.name != 'Unnamed: 0':
+        if self.table.index.name != 'Unnamed: 0' and 'Unnamed: 0' in self.table.columns:
             self.table = self.table.set_index('Unnamed: 0')
         # Create data strings
         for solvent in self.table.columns.tolist():
@@ -162,59 +166,65 @@ class SS_Dataset(Dataset):
         # Check if any normalization is needed
         self.normalize = normalize
         self.full_data = full_data
+        self.norm_params = norm_params
         if True in self.normalize:
-            G_n, solvent_n, solute_n = self.normalize
-            # norm_parameters
-            norm_data = []
-            # norm parameters are calculated from all the available data
-            norm_table = pd.read_table(project_path(self.full_data))
+            if not self.norm_params:
+                G_n, solvent_n, solute_n = self.normalize
+                # norm_parameters
+                norm_data = []
+                # norm parameters are calculated from all the available data
+                norm_table = pd.read_table(project_path(self.full_data))
 
-            # Set a column with Solutes as index column
-            if norm_table.index.name != 'Unnamed: 0':
-                norm_table = norm_table.set_index('Unnamed: 0')
-            # Create list of solvent, solute, G_solv values
-            for solvent in norm_table.columns.tolist():
-                for solute in norm_table.index.tolist():
-                    G_solv = norm_table[solvent][solute]
-                    if not pd.isna(G_solv):
-                        norm_data.append((solvent, solute, G_solv))
+                # Set a column with Solutes as index column
+                if norm_table.index.name != 'Unnamed: 0':
+                    norm_table = norm_table.set_index('Unnamed: 0')
+                # Create list of solvent, solute, G_solv values
+                for solvent in norm_table.columns.tolist():
+                    for solute in norm_table.index.tolist():
+                        G_solv = norm_table[solvent][solute]
+                        if not pd.isna(G_solv):
+                            norm_data.append((solvent, solute, G_solv))
 
-            # Create X and y tensors
-            for i in range(len(norm_data)):
-                solvent, solute, G_solv = norm_data[i]
-                X1 = get_sample(solvent, self.solvent_vect)
-                X2 = get_sample(solute, self.solute_vect)
-                y = torch.tensor(G_solv)
+                # Create X and y tensors
+                for i in range(len(norm_data)):
+                    solvent, solute, G_solv = norm_data[i]
+                    X1 = get_sample(solvent, self.solvent_vect)
+                    X2 = get_sample(solute, self.solute_vect)
+                    y = torch.tensor(G_solv)
 
-                # Create initial tensors
-                if i == 0:
-                    X_solvent, X_solute, y_all = X1, X2, y
-                # Stack all the tensors together
-                else:
-                    X_solvent = torch.vstack((X_solvent, X1))
-                    X_solute = torch.vstack((X_solute, X2))
-                    y_all = torch.vstack((y_all, y))
+                    # Create initial tensors
+                    if i == 0:
+                        X_solvent, X_solute, y_all = X1, X2, y
+                    # Stack all the tensors together
+                    else:
+                        X_solvent = torch.vstack((X_solvent, X1))
+                        X_solute = torch.vstack((X_solute, X2))
+                        y_all = torch.vstack((y_all, y))
 
-            def std_mean_no_zero(tensor, dim=0):
-                """ Prevents std to be 0. Replaces 0 std with 1."""
-                s1, m1 = torch.std_mean(tensor, dim=dim)
-                s2 = s1 + (s1 == 0) * 1
-                return tuple((s2, m1))
+                def std_mean_no_zero(tensor, dim=0):
+                    """ Prevents std to be 0. Replaces 0 std with 1."""
+                    s1, m1 = torch.std_mean(tensor, dim=dim)
+                    s2 = s1 + (s1 == 0) * 1
+                    return tuple((s2, m1))
 
-            self.X_solvent_norm = std_mean_no_zero(X_solvent, dim=0)
-            self.X_solute_norm = std_mean_no_zero(X_solute, dim=0)
-            self.y_norm = std_mean_no_zero(y_all, dim=0)
-            self.norm_params = {'Solvent': self.X_solvent_norm, 'Solute': self.X_solute_norm, 'G': self.y_norm}
+                self.X_solvent_norm = std_mean_no_zero(X_solvent, dim=0)
+                self.X_solute_norm = std_mean_no_zero(X_solute, dim=0)
+                self.y_norm = std_mean_no_zero(y_all, dim=0)
+                self.norm_params = {'Solvent': self.X_solvent_norm, 'Solute': self.X_solute_norm, 'G': self.y_norm}
 
-            # If needed norm parameters will be printed
-            if show_norm_params:
-                print(f'length check-> Solvent: {len(X_solvent)}, Solute: {len(X_solute)}, G_solv: {len(y_all)}\n')
-                if solvent_n:
-                    print(f'Solvent\n std: {self.X_solvent_norm[0]} \n mean: {self.X_solvent_norm[1]}')
-                if solute_n:
-                    print(f'Solute\n std: {self.X_solute_norm[0]} \n mean: {self.X_solute_norm[1]}')
-                if G_n:
-                    print(f'G_solv\n std: {self.y_norm[0]} \n mean: {self.y_norm[1]}\n')
+                # If needed norm parameters will be printed
+                if show_norm_params:
+                    print(f'length check-> Solvent: {len(X_solvent)}, Solute: {len(X_solute)}, G_solv: {len(y_all)}\n')
+                    if solvent_n:
+                        print(f'Solvent\n std: {self.X_solvent_norm[0]} \n mean: {self.X_solvent_norm[1]}')
+                    if solute_n:
+                        print(f'Solute\n std: {self.X_solute_norm[0]} \n mean: {self.X_solute_norm[1]}')
+                    if G_n:
+                        print(f'G_solv\n std: {self.y_norm[0]} \n mean: {self.y_norm[1]}\n')
+            else:
+                self.X_solvent_norm = self.norm_params['Solvent']
+                self.X_solute_norm = self.norm_params['Solute']
+                self.y_norm = self.norm_params['G']
 
         # Create X and y for ML
         X, y = [], []

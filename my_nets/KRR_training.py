@@ -26,6 +26,7 @@ aliases = {'blank': 'blank',
            'solutetesa': 'tesa',
            'morgan': 'morgan2124', 'morganfp': 'morgan2124', 'morganfp2124': 'morgan2124', 'morgan2124': 'morgan2124',
            'morganfingerprints': 'morgan2124',
+           'morgan2to20': 'morgan21048576',
            'jb': 'justbonds'
            }
 
@@ -33,7 +34,10 @@ cap = {'blank': 'Blank',
        'class': 'Class',
        'tesa': 'TESA',
        'macro': 'Macro',
+       'macroextra': 'MacroExtra',
        'morgan': 'Morgan',
+       'computedprops': 'Comp',
+        'morgan2to20': 'Morgan_2_2to20',
        'jb': 'JB',
        'bob': 'BoB',
        'bat': 'BAT',
