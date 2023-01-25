@@ -9,6 +9,7 @@ from rdkit.Chem import AllChem
 from rdkit import RDLogger
 from config import project_path
 
+
 @lru_cache(maxsize=1000)
 def get_dictionary(name: str):
     """
@@ -23,19 +24,35 @@ def get_dictionary(name: str):
         'blank': 'Tables/blank_dict.pkl',
         'smiles': 'Tables/get_SMILES.pkl',
         'classification': 'Tables/Classification_dict.pkl',
+        'class': 'Tables/Classification_dict.pkl',
         'handlefile': 'Tables/file_handles.pkl',
         'bobsizes': 'Tables/MNSol_bags4.pkl',
         'bob': 'Tables/BoB_dict.pkl',
         'bagofbonds': 'Tables/BoB_dict.pkl',
         'bat': 'Tables/BAT_dict.pkl',
         'tesa': 'Tables/TESA_dict.pkl',
+        'solutetesa': 'Tables/TESA_dict.pkl',
+        'morgan': 'Tables/Morgan_2_124_dict.pkl',
         'morgan2124': 'Tables/Morgan_2_124_dict.pkl',
+        'morgan124': 'Tables/Morgan_2_124_dict.pkl',
+        'morgan21048576': 'Tables/Morgan_2_1048576_dict.pkl',
+        'morgan22to20': 'Tables/Morgan_2_1048576_dict.pkl',
+        'morgan2to20': 'Tables/Morgan_2_1048576_dict.pkl',
+        'mor2to20': 'Tables/Morgan_2_1048576_dict.pkl',
         'macro': 'Tables/Macro_dict.pkl',
+        'solventmacroprops': 'Tables/Macro_dict.pkl',
+        'macroextra': 'Tables/Macro_extra_dict.pkl',
+        'macrox': 'Tables/Macro_extra_dict.pkl',
         'solventtosolute': 'Tables/Reserve/solute_named_solvents.pkl',
         'ss': 'Tables/Solvents_Solutes.pkl',
         'justbonds': 'Tables/just_bonds_dict.pkl',
+        'jb': 'Tables/just_bonds_dict.pkl',
         'soap': 'Tables/SOAP_dict.pkl',
         'slatm': None,
+        'smdfilename': 'Tables/SMD_filenames_dict.pkl',
+        'computedprops': 'Tables/Computed_props_dict.pkl',
+        'comp': 'Tables/Computed_props_dict.pkl',
+        'computed': 'Tables/Computed_props_dict.pkl'
     }
     new_name = str(name.lower())
     new_name = ''.join(new_name.split())
@@ -60,11 +77,11 @@ def get_sample(compound: str, method: str):
             vectorization method to be used
         """
     out = get_dictionary(method)[compound]  # get vector with cached dict
-    out = torch.unsqueeze(out, dim=0) # add dummy dimension to match other tensors shape
+    out = torch.unsqueeze(out, dim=0)  # add dummy dimension to match other tensors shape
     return out
 
 
-def get_handle_file(compound, args=('Tables/Reserve/xyz_files', 'Tables/Reserve/all_solutes'),
+def get_handle_file(compound, args=('Tables/MNSol/xyz_files', 'Tables/MNSol/all_solutes'),
                     params=None, classic_xyz=True):
     """
         Returns a path for xyz file.
@@ -245,6 +262,89 @@ def BAT(compound, args=None, params=None):
     return out
 
 
+def Capitalized_name(name:str):
+    if name in ('blank', 'class', 'comp', 'macro', 'morgan', 'mor2to20'):
+        return name.capitalize()
+    elif name in ('tesa', 'jb', 'bat', 'soap'):
+        return name.upper()
+    elif name == 'bob':
+        return 'BoB'
+    elif name == 'macrox':
+        return 'MacroX'
+
+nicknames = {'blank': 'blank',
+             'classification': 'class',
+             'class': 'class',
+
+             'tesa': 'tesa',
+             'solutetesa': 'tesa',
+             'computedprops': 'comp',
+             'comp': 'comp',
+             'computed': 'comp',
+
+             'macro': 'macro',
+             'solventmacroprops': 'macro',
+             'macroextra': 'macrox',
+             'macrox': 'macrox',
+
+             'morgan': 'morgan',
+             'morgan2124': 'morgan',
+             'morgan124': 'morgan',
+             'morgan21048576': 'mor2to20',
+             'morgan22to20': 'mor2to20',
+             'morgan2to20': 'mor2to20',
+             'mor2to20': 'mor2to20',
+
+             'justbonds': 'jb',
+             'jb': 'jb',
+             'bob': 'bob',
+             'bagofbonds': 'bob',
+             'bat': 'bat',
+
+             'soap': 'soap'}
+
+
+def split_folder(folder):
+    folder = folder.lower()
+    for morgan in ('morgan_2_124', 'morgan_124', 'morgan124'):
+        folder = folder.replace(morgan, 'morgan')
+    for mor2to20 in ('morgan_2_1048576', 'morgan_1048576', 'morgan_2_2to20', 'morgan_2to20'):
+        folder = folder.replace(mor2to20, 'mor2to20')
+    solvent, solute, model, *_ = folder.split('_')
+    solvent = nicknames[solvent]
+    solute = nicknames[solute]
+    return solvent, solute, model
+
+
+
+def parse_formula(formula: str):
+    by_el = []
+    the_el = ''
+    for char in formula:
+        if char.isupper():
+            by_el.append(the_el)
+            the_el = ''
+        the_el += char
+    by_el.append(the_el)
+    by_el.remove('')
+    the_dict = {}
+    for element in by_el:
+        if '_{' in element:
+            el, number = element.strip('}').split('_{', 1)
+            the_dict[el] = int(number)
+        elif any([char.isdigit() for char in element]):
+            for i, char in enumerate(element):
+                if char.isdigit():
+                    split_i = i
+                    break
+            el = element[:i]
+            number = int(element[i:])
+            the_dict[el] = number
+        else:
+            the_dict[element] = 1
+
+    return the_dict
+
 # Vectorizers map to be put in SS_Dataset class
 copy_of_vectorizers_map = {
     'solvent_macro_props1': {'func': solvent_macro_props1, 'formats': ['tsv'],
@@ -258,7 +358,6 @@ copy_of_vectorizers_map = {
     'bag_of_bonds': {'func': bag_of_bonds, 'formats': [], 'paths': [], 'params': None},
     'BAT': {'func': BAT, 'formats': [], 'paths': [], 'params': None},
 }
-
 
 #
 # @lru_cache(maxsize=1000)
