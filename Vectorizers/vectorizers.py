@@ -36,8 +36,8 @@ def get_dictionary(name: str):
     path_map = {
         'blank': 'Tables/blank_dict.pkl',
         'smiles': 'Tables/get_SMILES.pkl',
-        'classification': 'Tables/Classification_dict.pkl',
-        'class': 'Tables/Classification_dict.pkl',
+        'classification': 'Tables/Class_dict.pkl',
+        'class': 'Tables/Class_dict.pkl',
         'handlefile': 'Tables/file_handles.pkl',
         'bobsizes': 'Tables/MNSol_bags4.pkl',
         'bob': 'Tables/BoB_dict.pkl',
