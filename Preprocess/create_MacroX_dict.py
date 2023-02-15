@@ -66,7 +66,7 @@ if __name__ == '__main__':
         data_dict[compound] = create_tensor(compound, (table1,))
 
     #
-    with open('/Users/balepka/PycharmProjects/msuAI/Tables/Macro_extra_dict.pkl', 'wb') as f:
+    with open('/Tables/MacroX_dict.pkl', 'wb') as f:
         pkl.dump(data_dict, f)
 #
 #

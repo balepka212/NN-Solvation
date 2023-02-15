@@ -11,7 +11,7 @@ from Vectorizers.vectorizers import get_dictionary
 
 def create_tensor(solute):
     SMD_filename = get_dictionary('smd_filename')[solute]
-    filepath = os.path.join(project_path('SMD_inputs/SMD_all'), 'GAS', SMD_filename + '.out')
+    filepath = os.path.join(project_path('Tables/SMD'), 'GAS', SMD_filename + '.out')
     with open(filepath) as f:
         for i, line in enumerate(f.readlines()):
             if line.startswith('Magnitude (Debye)'):
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         data_dict[compound] = create_tensor(compound)
 
 
-    with open('/Users/balepka/PycharmProjects/msuAI/Tables/Computed_props_dict.pkl', 'wb') as f:
+    with open('/Tables/Comp_dict.pkl', 'wb') as f:
         pkl.dump(data_dict, f)
     #
 #

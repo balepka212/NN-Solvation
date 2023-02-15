@@ -45,5 +45,6 @@ def create_df(data_file=r'/Users/balepka/PycharmProjects/msuAI/Tables/MNSol_alld
     return df3
 
 
-my_df = create_df()
-feather.write_feather(my_df, '../Tables/df3_3')
+if __name__ == "__main__":
+    my_df = create_df()
+    feather.write_feather(my_df, '../Tables/df3_3')

@@ -32,5 +32,5 @@ if __name__ == '__main__':
     for compound in Solvents+Solutes:
         JB_data[compound] = create_tensor(compound, bagger=bagger)
 
-    with open('/Users/balepka/PycharmProjects/msuAI/Tables/just_bonds_dict.pkl', 'wb') as f:
+    with open('/Tables/JB_dict.pkl', 'wb') as f:
         pkl.dump(JB_data, f)

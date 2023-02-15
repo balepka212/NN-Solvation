@@ -1,6 +1,6 @@
 import pickle as pkl
 from config import project_path
-from create_classification import create_tensor
+from create_Class import create_tensor
 
 with open(project_path('Tables/Solvatum/pre_class_dict.pkl'), 'rb') as f:
     pre_class_dict = pkl.load(f)

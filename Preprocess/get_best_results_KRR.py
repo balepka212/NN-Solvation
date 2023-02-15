@@ -46,7 +46,7 @@ best_data = {}
 directory = project_path('Run_results/KRR')
 for folder in os.listdir(directory):
     # print(folder)
-    if ('KRR2' in folder) or ('KRR1' in folder):
+    if 'KRR' in folder:
     # print(f'{folder}')
         file_path = os.path.join(directory, folder, 'all_curves.pkl')
         solvent, solute = split_solute_solvent(folder)

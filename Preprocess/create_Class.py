@@ -127,6 +127,3 @@ if __name__ == '__main__':
 
     for solvent, cl in missed_solvent_dict.items():
         data_dict[solvent] = create_tensor(cl)
-
-    with open('/Tables/Acree/Classification.pkl', 'wb') as f:
-        pkl.dump(data_dict, f)

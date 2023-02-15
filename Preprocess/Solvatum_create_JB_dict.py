@@ -1,7 +1,7 @@
 from chemreps.bagger import BagMaker
 from chemreps.just_bonds import bonds
 
-from create_just_bonds_dict import create_tensor
+from create_JB_dict import create_tensor
 from Vectorizers.vectorizers import get_sdf_file
 from config import project_path
 import pickle as pkl
@@ -25,5 +25,5 @@ for compound in Solvents+Solutes:
     the_dict[compound] = create_tensor(mol_path, bagger=bagger, from_sdf=True, crop=True)
 
 
-with open(project_path('Tables/Solvatum/JustBonds_dict.pkl'), 'wb') as f:
+with open(project_path('Tables/Solvatum/JB_dict.pkl'), 'wb') as f:
     pkl.dump(the_dict, f)

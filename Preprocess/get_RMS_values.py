@@ -9,7 +9,7 @@ U_vects = ('blank', 'class', 'tesa', 'comp', 'morgan', 'mor2to20', 'jb', 'bob', 
 template_df = pd.DataFrame(columns=S_vects, index=U_vects)
 
 pred_tables = {}
-with open(project_path(f'Tables/predicted_tables_KRR1.pkl'), 'rb') as f:
+with open(project_path(f'Tables/predicted_tables_KRR.pkl'), 'rb') as f:
     pred_tables = pkl.load(f)
 
 dataset_tables = {'main': pd.read_table(project_path('Tables/SS_table_v3.tsv'), index_col=0),
