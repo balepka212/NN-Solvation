@@ -115,6 +115,15 @@ def plot_one(model, scores, y_lim=(0.0, 2.0), relative_bars=None):
 
 # plt.figure(figsize=(16, 16))
 def plot_NN(scores, save=False, output='/Users/balepka/Downloads/best_Res_v1.png', y_lim=(0., 2.0), relative_bars=None):
+    """
+    Plots figure with RMS data for all models
+    :param scores: dictionary with best models performances
+    :param save: whether to save a figure to file
+    :param output: path to file to save the figure
+    :param y_lim: lower and upper limits of y axis
+    :param relative_bars: 'mean' to normalize to RMSD on mean, 'smd' to normalize on SMD results, None to absolute values
+    :return: None
+    """
     plt.axis('off')
     fig, ax = plt.subplots(10,10, sharex=True, sharey=True, figsize=(12,15))
     plt.tight_layout()
@@ -160,6 +169,15 @@ def plot_NN(scores, save=False, output='/Users/balepka/Downloads/best_Res_v1.png
 
 # plt.figure(figsize=(16, 16))
 def plot_NN_blank(scores, blank, save=False, output='/Users/balepka/Downloads/best_krr_v1.png', y_lim=(-1.0, 1.0)):
+    """
+    Plots figure with RMS data for all models with respect to blank experiments
+    :param scores: dictionary with best models performances
+    :param blank: "S" for solvent, "U" for solute
+    :param save: whether to save a figure to file
+    :param output: path to file to save the figure
+    :param y_lim: lower and upper limits of y axis
+    :return: None
+    """
     assert blank.lower() in ('s', 'u', 'solvent', 'solute')
     if blank.lower() == 'solvent' or blank.lower() == 's':
         blank = 'S'
@@ -201,20 +219,22 @@ def plot_NN_blank(scores, blank, save=False, output='/Users/balepka/Downloads/be
     plt.show()
 
 
-# no blanks
 if __name__ == '__main__':
-    NN = 'Lin'
-    output = '/Users/balepka/Downloads/best_KRR_raw1.png'
-
-    with open(project_path('Tables/Scores_KRR.pkl'), 'rb') as f:
+    NN = 'KRR'  # Choose NN from 'KRR', 'Lin', 'Res'
+    scores_path = f'Tables/Scores_{NN}.pkl'
+    with open(project_path(scores_path), 'rb') as f:
         scores = pkl.load(f)
-    plot_NN(scores, save=True, output=output, relative_bars=None)
 
-# if __name__ == '__main__':
-#     NN ='Lin'
-#     output = '/Users/balepka/Downloads/best_Res_bU_1.png'
-#
-#     with open(project_path('Tables/scores_Res.pkl'), 'rb') as f:
-#         scores = pkl.load(f)
-#     blank = 'U'
-#     plot_NN_blank(scores, blank, save=True, output=output)
+    # Regular
+    output = project_path(f'/Examples/results/RMS_{NN}_example.png')  # choose path to file
+    plot_NN(scores, save=True, output=output, relative_bars='mean')
+
+    # Blank Solvent
+    output = project_path(f'/Examples/results/RMS_{NN}_blankS_example.png')  # choose path to file
+    blank = 'S'
+    plot_NN_blank(scores, blank, save=True, output=output)
+
+    # Blank Solute
+    output = project_path(f'/Examples/results/RMS_{NN}_blankU_example.png')  # choose path to file
+    blank = 'U'
+    plot_NN_blank(scores, blank, save=True, output=output)
