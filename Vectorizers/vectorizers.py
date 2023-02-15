@@ -54,18 +54,18 @@ def get_dictionary(name: str):
         'mor2to20': 'Tables/Morgan_2_1048576_dict.pkl',
         'macro': 'Tables/Macro_dict.pkl',
         'solventmacroprops': 'Tables/Macro_dict.pkl',
-        'macroextra': 'Tables/Macro_extra_dict.pkl',
-        'macrox': 'Tables/Macro_extra_dict.pkl',
+        'macroextra': 'Tables/MacroX_dict.pkl',
+        'macrox': 'Tables/MacroX_dict.pkl',
         'solventtosolute': 'Tables/Reserve/solute_named_solvents.pkl',
         'ss': 'Tables/Solvents_Solutes.pkl',
-        'justbonds': 'Tables/just_bonds_dict.pkl',
-        'jb': 'Tables/just_bonds_dict.pkl',
+        'justbonds': 'Tables/JB_dict.pkl',
+        'jb': 'Tables/JB_dict.pkl',
         'soap': 'Tables/SOAP_dict.pkl',
         'slatm': None,
         'smdfilename': 'Tables/SMD_filenames_dict.pkl',
-        'computedprops': 'Tables/Computed_props_dict.pkl',
-        'comp': 'Tables/Computed_props_dict.pkl',
-        'computed': 'Tables/Computed_props_dict.pkl'
+        'computedprops': 'Tables/Comp_dict.pkl',
+        'comp': 'Tables/Comp_dict.pkl',
+        'computed': 'Tables/Comp_dict.pkl'
     }
     new_name = str(name.lower())
     new_name = ''.join(new_name.split())
