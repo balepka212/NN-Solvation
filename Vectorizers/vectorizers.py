@@ -9,6 +9,19 @@ from rdkit.Chem import AllChem
 from rdkit import RDLogger
 from config import project_path
 
+vect_sizes = {"blank": 1,
+              "class": 83,
+              "macro": 7,
+              "macrox": 14,
+              "comp": 6,
+              "tesa": 9,
+              "morgan": 124,
+              "morgan2to20": 1441,
+              "jb": 282,
+              "bob": 3098,
+              "bat": 4558,
+              "soap": 4704}
+
 
 @lru_cache(maxsize=1000)
 def get_dictionary(name: str):
@@ -262,7 +275,7 @@ def BAT(compound, args=None, params=None):
     return out
 
 
-def Capitalized_name(name:str):
+def Capitalized_name(name: str):
     if name in ('blank', 'class', 'comp', 'macro', 'morgan', 'mor2to20'):
         return name.capitalize()
     elif name in ('tesa', 'jb', 'bat', 'soap'):
@@ -271,6 +284,7 @@ def Capitalized_name(name:str):
         return 'BoB'
     elif name == 'macrox':
         return 'MacroX'
+
 
 nicknames = {'blank': 'blank',
              'classification': 'class',
@@ -316,7 +330,6 @@ def split_folder(folder):
     return solvent, solute, model
 
 
-
 def parse_formula(formula: str):
     by_el = []
     the_el = ''
@@ -344,6 +357,7 @@ def parse_formula(formula: str):
             the_dict[element] = 1
 
     return the_dict
+
 
 # Vectorizers map to be put in SS_Dataset class
 copy_of_vectorizers_map = {

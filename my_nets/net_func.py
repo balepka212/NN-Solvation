@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 from rdkit import Chem
-from Vectorizers.vectorizers import get_dictionary
+from Vectorizers.vectorizers import get_dictionary, vect_sizes
+from Vectorizers.vectorizers import Capitalized_name
 from my_nets.Create_dataset import SS_Dataset
 from torch.utils.data import DataLoader
 from config import *
@@ -9,6 +10,10 @@ import shutil
 import os
 import errno
 import matplotlib.pyplot as plt
+import pickle as pkl
+
+from my_nets.LinearNet import LinearNet3
+from my_nets.ResNET import ResNet1D
 
 
 def save_ckp(state, is_best, checkpoint_path, best_model_path):
@@ -348,3 +353,51 @@ def single_sample_loader(solvent, solute, S_vect, U_vect, normalize=(True, True,
     sample_loader = DataLoader(sample_ds)   # create sample dataloader
 
     return sample_loader
+
+
+def get_trained_model(estimator, solvent, solute, kernel='laplacian'):
+    """
+    estimator: str
+        name of estimator
+    solvent: str
+        name of solvent
+    solute: str
+        name of solute
+    kernel: str
+        kernel fo KRR
+    :return:
+    a trained model KRR, LinNet or ResNet
+    """
+    estimator = estimator.lower().replace('net', '')
+
+    if estimator == 'krr':
+        path = f'Run_results/KRR/{Capitalized_name(solvent.lower())}_{Capitalized_name(solute.lower())}_KRR/best_models.pkl'
+        with open(project_path(path), 'rb') as f:
+            krr_dict = pkl.load(f)
+
+        assert kernel in ('linear', 'polynomial_2', 'polynomial_3', 'rbf', 'laplacian'), "there is no such kernel"
+        return krr_dict[kernel]
+
+    elif estimator == 'lin':
+        in_feat = vect_sizes[solvent] + vect_sizes[solute]
+        model = LinearNet3(in_features=in_feat)
+        optimizer = torch.optim.Adam(model.parameters())
+        path = f'Run_results/LinNet/{Capitalized_name(solvent.lower())}_{Capitalized_name(solute.lower())}_Lin/best/best_val_model.pt'
+
+        model, optimizer, *args = load_ckp(path, model, optimizer)
+        model.eval()
+        return model
+
+    elif estimator == 'res':
+        in_feat = 1
+        Res_Dict = {'base_filters': 2, 'kernel_size': 3, 'stride': 2, 'groups': 1, 'n_block': 3, 'n_classes': 1,
+                    'use_bn': True, 'use_do': True, 'verbose': False}
+        model = ResNet1D(in_feat, **Res_Dict)
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+        path = f'Run_results/ResNet/{Capitalized_name(solvent.lower())}_{Capitalized_name(solute.lower())}_Res/best/best_val_model.pt'
+
+        model, optimizer, *args = load_ckp(path, model, optimizer)
+        model.eval()
+
+        return model
+
