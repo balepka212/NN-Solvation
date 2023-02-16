@@ -10,8 +10,8 @@ def what_time():
 
 exclude = ('blankblank',)
 
-solvents = ('blank', 'class', 'macro', 'macrox', 'morgan', 'morgan2to20', 'jb', 'bob', 'bat', 'soap')
-solutes = ('blank', 'class', 'tesa', 'computedprops', 'morgan', 'morgan2to20', 'jb', 'bob',  'bat', 'soap')
+solvents = ('blank', 'class', 'macro', 'macrox', 'morgan', 'mor2to20', 'jb', 'bob', 'bat', 'soap')
+solutes = ('blank', 'class', 'tesa', 'comp', 'morgan', 'mor2to20', 'jb', 'bob',  'bat', 'soap')
 for solvent in (solvents):
     for solute in (solutes):
         if solvent+solute not in exclude:
