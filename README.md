@@ -44,15 +44,32 @@ normalization parameters, run_log and comments. The links to each result folder 
 All training files are presented in [Training_files](Training_files) in the format Solvent_Solute_NN.
 
 #### Kernel Ridge Regression
-[KRR_training](Training_files/000_Consequent_KRR.py) - all KRR experiments are sequentially carried out in this file. 
-The results are available at
+[KRR_training](Training_files/000_Consequent_KRR.py) - all KRR experiments are sequentially carried out in this file.
 
 # Repository structure
 ### [config.py](config.py)
 A file with some useful function used along all the project.
+
+### [Examples](Examples)
+Jupyter Notebooks reproducing the figures. 
+[Feature Importanse](Examples/Feature_Permutation_Importance.ipynb) 
+and [Solv@TUM scores](Examples/Solvatum_models.ipynb)
+
+Folder with [Selected trained models](Examples/models)
+
+Folder with [Figures](Examples/results) obtained in this work
+
+### [Preprocess](Preprocess)
+A folder with some files used to prepare data (tables, dicts, ...)
+### [SMD](SMD)
+A folder with tables used for various functions and vectorizers
+### [Tables](Tables)
+A folder with tables used for various functions and vectorizers
 ### [Training_files](Training_files)
 A folder with .py files each of which trains the network with some parameters. All KRR training is in
 [one file](Training_files/000_Consequent_KRR.py).
+### [Vectorizers](Vectorizers)
+A package vectorizers.py that contains vectorizers functions used in this project
 
 ### [my_nets](my_nets)
 A package with some .py files to create and train networks
@@ -65,12 +82,6 @@ A package with some .py files to create and train networks
 
 &nbsp; &nbsp; [ResNET](my_nets/ResNET.py)- A file that contains 1D ResNET used for training. The model is adopted from
 [hsd1503](https://github.com/hsd1503/resnet1d/blob/master/util.py)
-### [Vectorizers](Vectorizers)
-A package vectorizers.py that contains vectorizers functions used in this project
-### [Tables](Tables)
-A folder with tables used for various functions and vectorizers
-### [Preprocess](Preprocess)
-A folder with some files used to prepare data (tables, dicts, ...)
 
 ## Vectorizers description {_tensor length_}
 ### Blank {_1_}
