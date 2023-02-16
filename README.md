@@ -62,7 +62,8 @@ Folder with [Figures](Examples/results) obtained in this work
 ### [Preprocess](Preprocess)
 A folder with some files used to prepare data (tables, dicts, ...)
 ### [SMD](SMD)
-A folder with tables used for various functions and vectorizers
+Files to perform and postprocess the SMD calculation of Free Solvation Energies. 
+The .inp and .out files are available upon request.
 ### [Tables](Tables)
 A folder with tables used for various functions and vectorizers
 ### [Training_files](Training_files)
