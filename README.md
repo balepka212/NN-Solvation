@@ -33,7 +33,7 @@ This feature is not available in the original [chemreps](https://github.com/chem
 yet [here](Tables/chemreps) are two modified files to be put in chemreps folder. 
 To prepare your own data please refer to [this file](Preprocess/Solvatum_create_JB_dict.py)
 
-## Training
+## Training and Results
 The training data is written to Runs folder (if you manually train a network) and the results are stored in Run_results
 (due to large file sizes Run_results is available for manual download from 
 [Yandex Disk](https://disk.yandex.com.tr/d/u9PkE_9iZovDiw)) including losses plot, 
@@ -72,21 +72,47 @@ A folder with tables used for various functions and vectorizers
 ### [Preprocess](Preprocess)
 A folder with some files used to prepare data (tables, dicts, ...)
 
-## Vectorizers description
-### Blank
-zero tensor with length one to train models without any information either on solvent or solute.
+## Vectorizers description {_tensor length_}
+### Blank {_1_}
+Vector of length 1 and value of 0 (vector = {0, }). 
+We use it to represent solutes or solvents in reference experiments 
+not to pass the model any information about the compound.
 
-### Classification
+### Class {_83_}
 Three layer classification, described in [MNSol Database](https://comp.chem.umn.edu/mnsol/). 
 
-### Solute_TESA
-taken from MNSol database calculated parameter of Total Exposed Surface Area. More info in
-[MNSol Database](https://comp.chem.umn.edu/mnsol/). 
+### Comp {_6_}
+Some properties, calculated in gas-phase prior to SMD calculation, namely \
+* μ, D (dipole moment)\
+* dX, Å (size along the X axis)\
+* dY, Å (size along the Y axis)\
+* dZ, Å (size along the Z axis)\
+* dE, (difference between LUMO and HOMO energies, calculated in gas-phase prior
+to SMD calculation)\
+* Molar mass, u
 
-### Solvent_Macro_props
-properties of solvent: nD, alpha, beta, gamma, epsilon, phi, psi. Sometimes called Abraham descriptors.
+### TESA {_9_}
+Only for solutes. 
+Calculated by authors of the MNSol database total exposed surface area of molecule accessible to a solvent, 
+based on overlapping atomic spheres. 
+The accessible area for each type of atom in the compound is presented in the corresponding position. 
+Detailed information present in [this paper](https://doi.org/10.1002/jcc.540160405). 
 
-### MorganFingerprints
+### Macro {_7_}
+Only for solvents. 
+Macroscopic properties of solvent taken from the MNSol database (sometimes called Abraham descriptors).
+Namely: nD, alpha, beta, gamma, epsilon, phi, psi. Described in [MNSol Database](https://comp.chem.umn.edu/mnsol/).
+
+### MacroX {_14_}
+
+Combined Macro, Comp, and densities value for solvents. Density, g/cm3 (Obtained from [PubChem](https://pubchem.org)) 
+
+
+### Morgan {_124_}
+Circular fingerprints denoting molecular structure. 
+The maximum radius of the substructure is 2, the maximum hash size is 124, 
+thus many collisions of submolecules are present. 
+In this method, the compound is represented by encoding the subsets of atoms presented in this molecule
 calculated morgan fingerprints bit vector, described 
 [here](https://towardsdatascience.com/a-practical-introduction-to-the-use-of-molecular-fingerprints-in-drug-discovery-7f15021be2b1)
 
@@ -94,20 +120,39 @@ If troubles with installation try
 
 `pip install rdkit-pypi`
 
-### BoB
+### Mor2to20 {_1441_}
+Morgan with a radius of 2 and hash size of 2<sup>20</sup>. 
+This gives a lot of sparse vectors, which were further reduced by deleting positions that have zeros for every compound in the dataset. Thus, reducing the length of the vector from 1048576 to 1441 with no collisions.
+
+### BoB {_3098_}
 Bag of Bonds.
+Returns bag of bonds for a given compound. 
+For each pair of atoms, a parameter derived from an interatomic distance is generated
+(z<sub>i</sub>•z<sub>j</sub>/r<sub>ij</sub> for different atoms and 0.5•z<sup>2.4</sup> for a single atom)
+and added to bag. 
 
 scipy install problems solved here:
 https://stackoverflow.com/a/69710042/13835675
 
-### JustBonds (JB)
-Bag of Bonds for bonded atoms only
+### JB {_282_}
+JustBonds. Bag of Bonds for bonded atoms only
 
-### BAT
-Bag of Bonds with addition of Angles and Torsion angles between bonded atoms
+On additional datasets modified JB was used. 
+As some of the bags are larger than those in MNSol the bags were cropped to MNSol sizes. 
+The closest atoms were put into the vector and the furthest were eliminated to match the bag sizes.
 
-### SOAP
-Smooth Overlap of Atomic Positions, thoroughly described [here](https://doi.org/10.1103/PhysRevB.87.184115)
+### BAT {_4558_}
+Bonds-Angles-Torsions. 
+BoB with the addition of values derived from angles of 3 consequently bonded atoms 
+and torsions of 4 consequently bonded atoms
+
+### SOAP {_4704_}
+SOAP represents the local environment around a central atom by 
+gaussian-smeared neighbour atom positions made rotationally invariant. 
+The concept of this descriptor is described [here](https://doi.org/10.1103/PhysRevB.87.184115). 
+We used dscribe.descriptors.SOAP python 
+[package](https://github.com/SINGROUP/dscribe/tree/master/dscribe) to create molecule vectors.
+
 
 # Table with Solvent-Solute Experiment links
 Only works if Runs_folder is manually downloaded from [Yandex Disk](https://disk.yandex.com.tr/d/u9PkE_9iZovDiw)
@@ -148,8 +193,8 @@ Only works if Runs_folder is manually downloaded from [Yandex Disk](https://disk
 
 | Solvent➡️ <br/>⬇️Solute | Blank                                                               | Class                                                               | Macro                                                                | MacroX                                                                  | Morgan                                                                     | Mor2to20                                                                      | JustBonds                                                          | BoB                                                            | BAT                                                            | SOAP                                                              |
 |-------------------------|---------------------------------------------------------------------|---------------------------------------------------------------------|----------------------------------------------------------------------|-----------------------------------------------------------------------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------|--------------------------------------------------------------------|----------------------------------------------------------------|----------------------------------------------------------------|-------------------------------------------------------------------|
-| **Blank**               |                                                                     | [Class Blank](Run_results/ResNet/Class_Blank_Res)                  | [Macro Blank](Run_results/ResNet/Macro_Blank_Res)                   | [MacroX Blank](Run_results/ResNet/MacroX_Blank_Res)                | [Morgan Blank](Run_results/ResNet/Morgan_Blank_Res)                       | [Mor2to20 Blank](Run_results/ResNet/Morgan_2_2to20_Blank_Res)                | [JB Blank](Run_results/ResNet/JB_Blank_Res)                | [BoB Blank](Run_results/ResNet/BoB_Blank_Res)                 | [BAT Blank](Run_results/ResNet/BAT_Blank_Res)                 | [SOAP Blank](Run_results/ResNet/SOAP_Blank_Res)                  |
-| **Class**               | [Blank Class](Run_results/ResNet/Blank_Class_Res)                  | [Class Class](Run_results/ResNet/Class_Class_Res)                  | [Macro Class](Run_results/ResNet/Macro_Class_Res)                   | [MacroX Class](Run_results/ResNet/MacroX_Class_Res)                | [Morgan Class](Run_results/ResNet/Morgan_Class_Res)                 | [Mor2to20 Class](Run_results/ResNet/Morgan_2_2to20_Class_Res)                | [JB Class](Run_results/ResNet/JB_Class_Res)                | [BoB Class](Run_results/ResNet/BoB_Class_Res)                 | [BAT Class](Run_results/ResNet/BAT_Class_Res)                 | [SOAP Class](Run_results/ResNet/SOAP_Class_Res)                  |
+| **Blank**               |                                                                     | [Class Blank](Run_results/ResNet/Class_Blank_Res)                  | [Macro Blank](Run_results/ResNet/Macro_Blank_Res)                   | [MacroX Blank](Run_results/ResNet/MacroX_Blank_Res)                | [Morgan Blank](Run_results/ResNet/Morgan_Blank_Res)                       | [Mor2to20 Blank](Run_results/ResNet/Mor2to20_Blank_Res)                | [JB Blank](Run_results/ResNet/JB_Blank_Res)                | [BoB Blank](Run_results/ResNet/BoB_Blank_Res)                 | [BAT Blank](Run_results/ResNet/BAT_Blank_Res)                 | [SOAP Blank](Run_results/ResNet/SOAP_Blank_Res)                  |
+| **Class**               | [Blank Class](Run_results/ResNet/Blank_Class_Res)                  | [Class Class](Run_results/ResNet/Class_Class_Res)                  | [Macro Class](Run_results/ResNet/Macro_Class_Res)                   | [MacroX Class](Run_results/ResNet/MacroX_Class_Res)                | [Morgan Class](Run_results/ResNet/Morgan_Class_Res)                 | [Mor2to20 Class](Run_results/ResNet/Mor2to20_Class_Res)                | [JB Class](Run_results/ResNet/JB_Class_Res)                | [BoB Class](Run_results/ResNet/BoB_Class_Res)                 | [BAT Class](Run_results/ResNet/BAT_Class_Res)                 | [SOAP Class](Run_results/ResNet/SOAP_Class_Res)                  |
 | **Comp**                | [Blank Comp](Run_results/ResNet/Blank_Comp_Res)                | [Class Comp](Run_results/ResNet/Class_Comp_Res)            | [Macro Comp](Run_results/ResNet/Macro_Comp_Res)                 | [MacroX Comp](Run_results/ResNet/MacroX_Comp_Res)              | [Morgan Comp](Run_results/ResNet/Morgan_Comp_Res)               | [Mor2to20 Comp](Run_results/ResNet/Mor2to20_Comp_Res)              | [JB Comp](Run_results/ResNet/JB_Comp_Res)              | [BoB Comp](Run_results/ResNet/BoB_Comp_Res)               | [BAT Comp](Run_results/ResNet/BAT_Comp_Res)               | [SOAP Comp](Run_results/ResNet/SOAP_Comp_Res)                |
 | **TESA**                | [Blank TESA](Run_results/ResNet/Blank_TESA_Res)                    | [Class TESA](Run_results/ResNet/Class_TESA_Res)                    | [Macro TESA](Run_results/ResNet/Macro_TESA_Res)                     | [MacroX TESA](Run_results/ResNet/MacroX_TESA_Res)                  | [Morgan TESA](Run_results/ResNet/Morgan_TESA_Res)                   | [Mor2to20 TESA](Run_results/ResNet/Mor2to20_TESA_Res)                  | [JB TESA](Run_results/ResNet/JB_TESA_Res)                  | [BoB TESA](Run_results/ResNet/BoB_TESA_Res2)                   | [BAT TESA](Run_results/ResNet/BAT_TESA_Res)                   | [SOAP TESA](Run_results/ResNet/SOAP_TESA_Res)                    |
 | **Morgan**              | [Blank Morgan](Run_results/ResNet/Blank_Morgan_Res)                | [Class Morgan](Run_results/ResNet/Class_Morgan_Res)          | [Macro Morgan](Run_results/ResNet/Macro_Morgan_Res)           | [MacroX Morgan](Run_results/ResNet/MacroX_Morgan_Res)        | [Morgan Morgan](Run_results/ResNet/Morgan_Morgan_Res)         | [Mor2to20 Morgan](Run_results/ResNet/Mor2to20_Morgan_Res)        | [JB Morgan](Run_results/ResNet/JB_Morgan_Res)              | [BoB Morgan](Run_results/ResNet/BoB_Morgan_Res2)         | [BAT Morgan](Run_results/ResNet/BAT_Morgan_Res2)         | [SOAP Morgan](Run_results/ResNet/SOAP_Morgan_Res)                |
