@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 from config import project_path
 from Vectorizers.vectorizers import get_handle_file
+import pickle as pkl
 
 # The input files for geometry/sp will be created by using that script
 # sys.argv[1] = xyz files
@@ -115,7 +116,7 @@ def create_inp(filename, solvent=None, folder='/'):
             fil.write('\n' % ())
             fil.close()
 
-import pickle as pkl
+
 # #
 # with open(project_path('Tables/Solvents_Solutes.pkl'), 'rb') as f:
 #     Solvents, Solutes = pkl.load(f)
